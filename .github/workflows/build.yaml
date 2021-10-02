@@ -32,7 +32,7 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/testsystem:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/moneymanager:latest
       - 
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
