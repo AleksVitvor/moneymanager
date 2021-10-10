@@ -18,6 +18,7 @@ COPY ["Application/Application.csproj", "Application/"]
 COPY ["Domain/Domain.csproj", "Domain/"]
 COPY ["Logging/Logging.csproj", "Logging/"]
 COPY ["Infrastructure/Infrastructure.csproj", "Infrastructure/"]
+COPY ["Persistence/Persistence.csproj", "Persistence/"]
 RUN dotnet restore "MoneyManager/MoneyManager.csproj"
 COPY . .
 WORKDIR "/src/MoneyManager"

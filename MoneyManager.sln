@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logging", "Logging\Logging.csproj", "{CC71079A-27B9-47E7-A224-11C88A1F4D6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyManager", "MoneyManager\MoneyManager.csproj", "{9E11A411-DFF6-4AAD-9E8B-0D83F458ADFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneyManager", "MoneyManager\MoneyManager.csproj", "{9E11A411-DFF6-4AAD-9E8B-0D83F458ADFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "Persistence\Persistence.csproj", "{77176D35-38D4-4E91-8D46-B04C92D3E06B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{9E11A411-DFF6-4AAD-9E8B-0D83F458ADFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E11A411-DFF6-4AAD-9E8B-0D83F458ADFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E11A411-DFF6-4AAD-9E8B-0D83F458ADFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77176D35-38D4-4E91-8D46-B04C92D3E06B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77176D35-38D4-4E91-8D46-B04C92D3E06B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77176D35-38D4-4E91-8D46-B04C92D3E06B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77176D35-38D4-4E91-8D46-B04C92D3E06B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
