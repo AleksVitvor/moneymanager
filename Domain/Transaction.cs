@@ -32,5 +32,13 @@ namespace Domain
         public int? ParentTransactionId { get; set; }
 
         public virtual Transaction ParentTransaction { get; set; }
+
+        [Required]
+        [Column("UserId")]
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+
+        public virtual User User { get; set; }
+
     }
 }
