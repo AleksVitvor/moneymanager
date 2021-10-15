@@ -1,25 +1,23 @@
-﻿using Application.DTOs.UserDTOs;
-using Application.Services;
-using Application.Services.LoginService;
-using Infrastructure.Options;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Threading.Tasks;
-
-namespace MoneyManager.Controllers
+﻿namespace MoneyManager.Controllers
 {
+    using Application.DTOs.UserDTOs;
+    using Application.Services;
+    using Application.Services.LoginService;
+    using Infrastructure.Options;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.IdentityModel.Tokens;
+    using System;
+    using System.Collections.Generic;
+    using System.IdentityModel.Tokens.Jwt;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
+
     public class AuthController : BaseApiController
     {
-        private readonly ILoginService loginService;
-        public AuthController(ILoginService loginService)
+        private readonly IUserService userService;
+        public AuthController(IUserService userService)
         {
-            this.loginService = loginService;
+            this.userService = userService;
         }
 
         [HttpPost]
@@ -27,7 +25,7 @@ namespace MoneyManager.Controllers
         {
             try
             {
-                var user = await loginService.GetUserByEmail(
+                var user = await userService.GetUserByEmail(
                     requestLogin.Username, 
                     CryptoService.ComputeHash(requestLogin.Password));
 
@@ -50,7 +48,10 @@ namespace MoneyManager.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Authentication failed");
+                return StatusCode(500, new
+                {
+                    Message = "Authentication failed"
+                });
             }
             
         }
@@ -64,14 +65,20 @@ namespace MoneyManager.Controllers
 
                 if (id > 0)
                 {
-                    return Ok(await loginService.GetUserById(id));
+                    return Ok(await userService.GetUserById(id));
                 }
 
-                return BadRequest("User can't be found");
+                return BadRequest(new
+                {
+                    Message = "User can't be found"
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Authentication failed");
+                return StatusCode(500, new
+                {
+                    Message = "Authentication failed"
+                });
             }
         }
 
@@ -84,15 +91,13 @@ namespace MoneyManager.Controllers
                     new Claim(ClaimsIdentity.DefaultNameClaimType, loginModel.Id.ToString()),
                     new Claim(ClaimsIdentity.DefaultRoleClaimType, loginModel.Role)
                 };
-                // создаем объект ClaimsIdentity
-                ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,
+                ClaimsIdentity claimsIdentity =
+                new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
                     ClaimsIdentity.DefaultRoleClaimType);
-                // установка аутентификационных куки
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
-
-                return id;
+                return claimsIdentity;
             }
 
+            // если пользователя не найдено
             return null;
         }
 

@@ -2,16 +2,15 @@
 {
     using Application.DTOs.UserDTOs;
     using AutoMapper;
-    using Infrastructure.Options;
+    using Domain;
     using Microsoft.EntityFrameworkCore;
     using Persistence;
     using System;
-    using System.IdentityModel.Tokens.Jwt;
     using System.Threading.Tasks;
 
-    public class LoginService : BaseService, ILoginService 
+    public class UserService : BaseService, IUserService 
     {
-        public LoginService(MoneyManagerContext context, IMapper mapper) : base(context, mapper)
+        public UserService(MoneyManagerContext context, IMapper mapper) : base(context, mapper)
         {
 
         }
@@ -41,6 +40,20 @@
                     .SingleOrDefaultAsync(x => x.UserId == id));
 
                 return user;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task RegisterUser(RegistrationModelDTO registrationModel)
+        {
+            try
+            {
+                await context.Users.AddAsync(mapper.Map<User>(registrationModel));
+                await context.SaveChangesAsync();
+                return;
             }
             catch (Exception ex)
             {

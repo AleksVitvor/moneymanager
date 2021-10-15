@@ -1,5 +1,3 @@
-import { Signup4Component } from './signup4/signup4.component';
-import { Signup3Component } from './signup3/signup3.component';
 import { Signup2Component } from './signup2/signup2.component';
 import { Routes } from "@angular/router";
 

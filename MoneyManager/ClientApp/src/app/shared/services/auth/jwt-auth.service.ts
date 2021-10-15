@@ -38,25 +38,10 @@ export class JwtAuthService {
     private route: ActivatedRoute
   ) {
     this.route.queryParams
-      .subscribe(params => this.return = params['return'] || '/api/auth');
+      .subscribe(params => this.return = params['return'] || '/');
   }
 
   public signin(username, password) {
-    //return of({token: DEMO_TOKEN, user: DEMO_USER})
-    //  .pipe(
-    //    delay(1000),
-    //    map((res: any) => {
-    //      this.setUserAndToken(res.token, res.user, !!res);
-    //      this.signingIn = false;
-    //      return res;
-    //    }),
-    //    catchError((error) => {
-    //      return throwError(error);
-    //    })
-    //);
-
-    // FOLLOWING CODE SENDS SIGNIN REQUEST TO SERVER
-
     this.signingIn = true;
     return this.http.post(`/api/auth`, { username, password })
       .pipe(
@@ -76,23 +61,6 @@ export class JwtAuthService {
     shared/components/layouts/admin-layout/admin-layout.component.ts
   */
   public checkTokenIsValid() {
-    //return of(DEMO_USER)
-    //  .pipe(
-    //    map((profile: User) => {
-    //      this.setUserAndToken(this.getJwtToken(), profile, true);
-    //      this.signingIn = false;
-    //      return profile;
-    //    }),
-    //    catchError((error) => {
-    //      return of(error);
-    //    })
-    //  );
-    
-    /*
-      The following code get user data and jwt token is assigned to
-      Request header using token.interceptor
-      This checks if the existing token is valid when app is reloaded
-    */
 
     return this.http.get(`/api/auth`)
       .pipe(
@@ -112,7 +80,7 @@ export class JwtAuthService {
     this.router.navigateByUrl("sessions/signin");
   }
 
-  isLoggedIn(): Boolean {
+  public isLoggedIn(): Boolean {
     return !!this.getJwtToken();
   }
 

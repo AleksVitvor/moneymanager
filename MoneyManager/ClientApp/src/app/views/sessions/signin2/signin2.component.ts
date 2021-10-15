@@ -31,14 +31,10 @@ export class Signin2Component implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.signinForm = new FormGroup({
-      email: new FormControl('test@mail.ru', Validators.required),
-      password: new FormControl('12345678', Validators.required),
+      email: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
       rememberMe: new FormControl(true)
     });
-
-    // this.route.queryParams
-    //   .pipe(takeUntil(this._unsubscribeAll))
-    //   .subscribe(params => this.return = params['return'] || '/');
   }
 
   ngAfterViewInit() {

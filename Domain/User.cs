@@ -25,6 +25,10 @@
         public string FullName { get; set; }
 
         [Required]
+        [Column("Username")]
+        public string Username { get; set; }
+
+        [Required]
         [Column("RoleId")]
         [ForeignKey("Role")]
         public int RoleId { get; set; }

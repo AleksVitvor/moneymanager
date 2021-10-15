@@ -64,7 +64,7 @@ namespace MoneyManager
                 opts.UseSqlServer(Configuration.GetDbConnectionString(Environment)));
 
             services.AddAutoMapper(typeof(Application.Profiles.UserProfile));
-            services.AddTransient<ILoginService, LoginService>();
+            services.AddTransient<IUserService, UserService>();
 
         }
 
@@ -80,6 +80,7 @@ namespace MoneyManager
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())

@@ -25,6 +25,8 @@ namespace MoneyManager
                         context.Database.Migrate();
                     }
 
+                    MoneyManagerContextSeed.SeedSampleData(context);
+
                 }
                 catch (Exception ex)
                 {
