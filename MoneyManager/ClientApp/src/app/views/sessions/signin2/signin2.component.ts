@@ -57,7 +57,6 @@ export class Signin2Component implements OnInit, AfterViewInit, OnDestroy {
       }, err => {
         this.submitButton.disabled = false;
         this.errorMsg = err.message;
-        // console.log(err);
       })
   }
 

@@ -10,6 +10,8 @@
         {
             IList<Role> sampleRole = new List<Role>();
 
+            IList<TransactionType> transactionTypes = new List<TransactionType>();
+
             if (!context.Roles.Any())
             {
                 sampleRole.Add(new Role()
@@ -22,6 +24,23 @@
                 });
 
                 context.Roles.AddRange(sampleRole);
+
+                context.SaveChanges();
+            }
+
+            if (!context.TransactionTypes.Any())
+            {
+                transactionTypes.Add(new TransactionType()
+                {
+                    Description = "Refill"
+                });
+
+                transactionTypes.Add(new TransactionType()
+                {
+                    Description = "Expenses"
+                });
+
+                context.TransactionTypes.AddRange(transactionTypes);
 
                 context.SaveChanges();
             }

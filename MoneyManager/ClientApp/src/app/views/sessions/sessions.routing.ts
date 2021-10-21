@@ -14,32 +14,26 @@ export const SessionsRoutes: Routes = [
       {
         path: "signup",
         component: Signup2Component,
-        data: { title: "Signup" }
       },
       {
         path: "signin",
         component: Signin2Component,
-        data: { title: "Signin" }
       },
       {
         path: "forgot-password",
         component: ForgotPasswordComponent,
-        data: { title: "Forgot password" }
       },
       {
         path: "lockscreen",
         component: LockscreenComponent,
-        data: { title: "Lockscreen" }
       },
       {
         path: "404",
         component: NotFoundComponent,
-        data: { title: "Not Found" }
       },
       {
         path: "error",
         component: ErrorComponent,
-        data: { title: "Error" }
       }
     ]
   }

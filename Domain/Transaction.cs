@@ -20,6 +20,20 @@ namespace Domain
         public float Amount { get; set; }
 
         [Required]
+        [Column("TransactionTypeId")]
+        [ForeignKey("TransactionType")]
+        public int TransactionTypeId { get; set; }
+
+        public virtual TransactionType TransactionType { get; set; }
+
+        [Required]
+        [Column("TransactionCategoryId")]
+        [ForeignKey("TransactionCategory")]
+        public int TransactionCategoryId { get; set; }
+
+        public virtual TransactionCategory TransactionCategory { get; set; }
+
+        [Required]
         [Column("TransactionDate")]
         public DateTime TransactionDate { get; set; }
 

@@ -15,6 +15,10 @@
 
         public DbSet<Role> Roles { get; set; }
 
+        public DbSet<TransactionType> TransactionTypes { get; set; }
+
+        public DbSet<TransactionCategory> TransactionCategories { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -22,6 +26,11 @@
                         .HasOne(x => x.ChildTransaction)
                         .WithOne(x => x.ParentTransaction)
                         .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<TransactionCategory>()
+                .HasOne(x=>x.User)
+                .WithMany(x=>x.TransactionCategories)
+                .OnDelete(DeleteBehavior.NoAction);
 
         }
     }

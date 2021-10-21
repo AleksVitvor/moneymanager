@@ -1,4 +1,7 @@
+using Application.Profiles;
 using Application.Services.LoginService;
+using Application.Services.MappingService;
+using Application.Services.TransactionService;
 using Infrastructure.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -63,9 +66,9 @@ namespace MoneyManager
             services.AddDbContext<MoneyManagerContext>(opts =>
                 opts.UseSqlServer(Configuration.GetDbConnectionString(Environment)));
 
-            services.AddAutoMapper(typeof(Application.Profiles.UserProfile));
+            services.AddAutoMapper(typeof(UserProfile), typeof(TransactionProfile));
             services.AddTransient<IUserService, UserService>();
-
+            services.AddTransient<ITransactionService, TransactionService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -80,7 +83,6 @@ namespace MoneyManager
                 app.UseHsts();
             }
 
-            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())
@@ -89,6 +91,9 @@ namespace MoneyManager
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

@@ -29,7 +29,7 @@
                     requestLogin.Username, 
                     CryptoService.ComputeHash(requestLogin.Password));
 
-                var identity = await this.Authenticate(user);
+                var identity = this.Authenticate(user);
 
                 if (user == null)
                 {
@@ -82,7 +82,7 @@
             }
         }
 
-        private async Task<ClaimsIdentity> Authenticate(LoginDTO loginModel)
+        private ClaimsIdentity Authenticate(LoginDTO loginModel)
         {
             if (loginModel != null)
             {

@@ -3,6 +3,7 @@
     using Application.DTOs.UserDTOs;
     using AutoMapper;
     using Domain;
+    using Infrastructure.DefaultSettings;
     using Microsoft.EntityFrameworkCore;
     using Persistence;
     using System;
@@ -51,7 +52,9 @@
         {
             try
             {
-                await context.Users.AddAsync(mapper.Map<User>(registrationModel));
+                var user = mapper.Map<User>(registrationModel);
+                user.TransactionCategories = DefaultTransactionCategories.TransactionCategories;
+                await context.Users.AddAsync(user);
                 await context.SaveChangesAsync();
                 return;
             }
