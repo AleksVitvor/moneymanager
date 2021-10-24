@@ -16,7 +16,7 @@ export class NgxTablePopupComponent implements OnInit, OnDestroy {
     {value: 2, viewValue: 'Refill'}
   ];
   transactionCategories: TransactionCategoryModel[];
-  public getCateSub: Subscription;
+  public getCategoriesSub: Subscription;
   public itemForm: FormGroup;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -31,8 +31,8 @@ export class NgxTablePopupComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.getCateSub) {
-      this.getCateSub.unsubscribe();
+    if (this.getCategoriesSub) {
+      this.getCategoriesSub.unsubscribe();
     }
   }
 
@@ -40,14 +40,19 @@ export class NgxTablePopupComponent implements OnInit, OnDestroy {
       this.crudService.getCategories()
         .subscribe(data => {
           this.transactionCategories = data;
+          this.itemForm.controls['transactionCategoryId']
+            .setValue(this.data.payload.transactionCategory !== undefined ? this.transactionCategories
+              .find(x => x.viewValue === this.data.payload.transactionCategory).value : '');
         });
   }
 
   buildItemForm(item) {
     this.itemForm = this.fb.group({
       storedAmount: [item.storedAmount || '', Validators.required],
-      transactionTypeId: [item.transactionTypeId || '', Validators.required],
-      transactionCategoryId: [item.transactionCategoryId || '', Validators.required],
+      transactionTypeId: [
+        item.transactionType !== undefined ? this.transactionTypes.find(x => x.viewValue === item.transactionType).value : '', Validators.required
+      ],
+      transactionCategoryId: [ '', Validators.required ],
       transactionDate: [item.transactionDate || '', Validators.required],
       isRepeatable: [item.isRepeatable || false]
     });

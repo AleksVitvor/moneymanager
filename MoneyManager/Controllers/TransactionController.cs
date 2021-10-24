@@ -102,7 +102,8 @@
         {
             try
             {
-                _ = int.TryParse(User.FindFirst(x => x.Type == ClaimsIdentity.DefaultNameClaimType).Value, out int userId);
+                _ = int.TryParse(User.FindFirst(x => x.Type == ClaimsIdentity.DefaultNameClaimType).Value,
+                    out int userId);
 
                 if (userId > 0)
                 {

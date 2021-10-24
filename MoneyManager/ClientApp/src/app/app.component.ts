@@ -13,7 +13,7 @@ import { UILibIconService } from './shared/services/ui-lib-icon.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  appTitle = 'Egret';
+  appTitle = 'Money Manager';
   pageTitle = '';
 
   constructor(
