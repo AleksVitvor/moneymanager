@@ -1,6 +1,7 @@
 using Application.Profiles;
 using Application.Services.LoginService;
 using Application.Services.MappingService;
+using Application.Services.TransactionCategoriesService;
 using Application.Services.TransactionService;
 using Infrastructure.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -69,6 +70,7 @@ namespace MoneyManager
             services.AddAutoMapper(typeof(UserProfile), typeof(TransactionProfile));
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ITransactionService, TransactionService>();
+            services.AddTransient<ITransactionCategoriesService, TransactionCategoriesService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

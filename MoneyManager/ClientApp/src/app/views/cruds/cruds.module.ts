@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
@@ -22,7 +22,9 @@ import { CrudsRoutes } from './cruds.routing';
 import { CrudService } from './crud.service';
 import { NgxTablePopupComponent } from './crud-ngx-table/ngx-table-popup/ngx-table-popup.component'
 import { TranslateModule } from '@ngx-translate/core';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
+import { TransactionCategoryComponent } from
+  "./crud-ngx-table/ngx-table-popup/transaction-category-popup/transaction-category-popup.component";
 
 @NgModule({
   imports: [
@@ -44,9 +46,10 @@ import {MatSelectModule} from '@angular/material/select';
     TranslateModule,
     SharedModule,
     RouterModule.forChild(CrudsRoutes),
-    MatSelectModule
+    MatSelectModule,
+    FormsModule
   ],
-  declarations: [CrudNgxTableComponent, NgxTablePopupComponent],
+  declarations: [CrudNgxTableComponent, NgxTablePopupComponent, TransactionCategoryComponent],
   providers: [CrudService],
   // entryComponents: [NgxTablePopupComponent]
 })

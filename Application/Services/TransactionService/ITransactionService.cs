@@ -8,8 +8,6 @@ namespace Application.Services.TransactionService
     {
         Task<List<TransactionDTO>> GetTransactions(int userId);
 
-        Task<List<TransactionCategoryDTO>> GetTransactionCategories(int userId);
-
         Task<List<TransactionDTO>> CreateTransaction(IncommingTransactionDTO transactionDTO);
 
         Task<List<TransactionDTO>> UpdateTransaction(IncommingTransactionDTO transactionDTO);

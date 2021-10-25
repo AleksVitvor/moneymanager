@@ -28,4 +28,15 @@ export class CrudService {
   getCategories() : Observable<any> {
     return this.http.get(`/api/transactioncategories`);
   }
+
+  addCategory(item): Observable<any> {
+    return this.http.post('/api/transactioncategories',
+      {
+        newCategory: item
+      });
+  }
+
+  removeCategory(itemId): Observable<any> {
+    return this.http.delete('/api/transactioncategories?categoryId=' + itemId);
+  }
 }

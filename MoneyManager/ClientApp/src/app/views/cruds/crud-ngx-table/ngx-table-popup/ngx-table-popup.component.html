@@ -40,12 +40,20 @@
     <div fxFlex="50"  class="pr-16">
       <mat-form-field  class="full-width" appearance="fill">
         <mat-label>Category</mat-label>
-        <mat-select
-          matInput
-          [ngModel]
-          formControlName="transactionCategoryId">
+        <mat-select matInput
+                    [ngModel]
+                    [(value)]="selectedValue"
+                    formControlName="transactionCategoryId"
+                    (selectionChange)="change()">
           <mat-option *ngFor="let category of transactionCategories" [value]="category.value">
-            {{category.viewValue}}
+            <div style="display:flex; justify-content: space-between">
+              <span>{{ category.viewValue }}</span>
+              <span></span>
+              <span (click)="deleteOption($event, category)"><mat-icon svgIcon="delete"></mat-icon></span>
+            </div>
+          </mat-option>
+          <mat-option [value]="'-1'">
+            Define new category
           </mat-option>
         </mat-select>
       </mat-form-field>

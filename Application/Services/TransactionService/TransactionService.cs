@@ -33,21 +33,6 @@
             }
         }
 
-        public async Task<List<TransactionCategoryDTO>> GetTransactionCategories(int userId)
-        {
-            try
-            {
-                var transactions = await context.TransactionCategories
-                    .Where(x => x.UserId == userId)
-                    .ToListAsync();
-                return mapper.Map<List<TransactionCategory>, List<TransactionCategoryDTO>>(transactions);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
-
         public async Task<List<TransactionDTO>> CreateTransaction(IncommingTransactionDTO transactionDTO)
         {
             try

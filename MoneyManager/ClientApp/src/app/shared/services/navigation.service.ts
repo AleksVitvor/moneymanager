@@ -237,18 +237,18 @@ export class NavigationService {
 
   plainMenu: IMenuItem[] = [
     {
-      name: 'DASHBOARD',
+      name: 'OVERVIEW',
       type: 'link',
-      tooltip: 'Dashboard',
+      tooltip: 'Overview',
       icon: 'dashboard',
-      state: 'dashboard'
+      state: 'transaction'
     },
     {
-      name: 'INBOX',
+      name: 'Transaction Types',
       type: 'link',
-      tooltip: 'Inbox',
+      tooltip: 'Transaction types',
       icon: 'inbox',
-      state: 'inbox'
+      state: 'types'
     },
     {
       name: 'CHAT',
@@ -417,7 +417,7 @@ export class NavigationService {
   // This title will appear if any icon type item is present in menu.
   iconTypeMenuTitle = 'Frequently Accessed';
   // sets iconMenu as default;
-  menuItems = new BehaviorSubject<IMenuItem[]>(this.iconMenu);
+  menuItems = new BehaviorSubject<IMenuItem[]>(this.plainMenu);
   // navigation component has subscribed to this Observable
   menuItems$ = this.menuItems.asObservable();
   constructor() {}

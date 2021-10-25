@@ -7,7 +7,7 @@ import { AppLoaderService } from '../../../shared/services/app-loader/app-loader
 import { NgxTablePopupComponent } from './ngx-table-popup/ngx-table-popup.component';
 import { Subscription } from 'rxjs';
 import { egretAnimations } from "../../../shared/animations/egret-animations";
-import {DisplayTransactionModel} from '../../../shared/models/display.transaction.model';
+import { DisplayTransactionModel } from '../../../shared/models/display.transaction.model';
 
 @Component({
   selector: 'app-crud-ngx-table',
@@ -54,7 +54,7 @@ export class CrudNgxTableComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed()
       .subscribe(res => {
         if (!res) {
-          // If user press cancel
+          this.getItems();
           return;
         }
         this.loader.open();

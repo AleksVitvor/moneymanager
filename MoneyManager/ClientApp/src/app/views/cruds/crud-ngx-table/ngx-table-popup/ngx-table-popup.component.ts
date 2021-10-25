@@ -1,10 +1,13 @@
 import {Component, OnInit, Inject, OnDestroy} from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import {TransactionTypeModel} from '../../../../shared/models/transactiontype.model';
-import {TransactionCategoryModel} from '../../../../shared/models/transactioncategory.model';
-import {Subscription} from 'rxjs';
-import {CrudService} from '../../crud.service';
+import { TransactionTypeModel } from '../../../../shared/models/transactiontype.model';
+import { TransactionCategoryModel } from '../../../../shared/models/transactioncategory.model';
+import { Subscription } from 'rxjs';
+import { MatIconRegistry } from "@angular/material/icon";
+import { DomSanitizer } from "@angular/platform-browser";
+import { CrudService } from '../../crud.service';
+import { TransactionCategoryComponent } from "./transaction-category-popup/transaction-category-popup.component";
 
 @Component({
   selector: 'app-ngx-table-popup',
@@ -17,13 +20,24 @@ export class NgxTablePopupComponent implements OnInit, OnDestroy {
   ];
   transactionCategories: TransactionCategoryModel[];
   public getCategoriesSub: Subscription;
+  public updateCategoriesSub: Subscription;
+  public removeCategoriesSub: Subscription;
   public itemForm: FormGroup;
+  public selectedValue: string;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<NgxTablePopupComponent>,
     private fb: FormBuilder,
-    private crudService: CrudService
-  ) { }
+    private crudService: CrudService,
+    public dialog: MatDialog,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
+    this.matIconRegistry.addSvgIcon(
+      "delete",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/images/svg-icons/close.svg")
+    );
+  }
 
   ngOnInit() {
     this.getCategories();
@@ -33,6 +47,14 @@ export class NgxTablePopupComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.getCategoriesSub) {
       this.getCategoriesSub.unsubscribe();
+    }
+
+    if (this.updateCategoriesSub) {
+      this.updateCategoriesSub.unsubscribe();
+    }
+
+    if (this.removeCategoriesSub) {
+      this.removeCategoriesSub.unsubscribe();
     }
   }
 
@@ -60,5 +82,39 @@ export class NgxTablePopupComponent implements OnInit, OnDestroy {
 
   submit() {
     this.dialogRef.close(this.itemForm.value);
+  }
+
+  change() {
+    if (this.itemForm.controls['transactionCategoryId'].value === '-1') {
+      console.log('Add an option');
+      const dialogRef = this.dialog.open(TransactionCategoryComponent, {
+        width: '300px',
+        data: { options: this.transactionCategories },
+      });
+      dialogRef.afterClosed()
+        .subscribe(newOption => {
+          if (newOption) {
+            this.crudService.addCategory(newOption)
+              .subscribe(data => {
+                this.transactionCategories = data;
+              });
+            this.itemForm.controls['transactionCategoryId'].setValue('');
+          } else {
+            this.selectedValue = null;
+          }
+      })
+    }
+  }
+
+  deleteOption(ev: Event, option) {
+    ev.stopPropagation();
+    ev.preventDefault();
+    this.crudService.removeCategory(option.value)
+      .subscribe(data => {
+        this.transactionCategories = data;
+      });
+    if (option.value === this.itemForm.controls['transactionCategoryId'].value) {
+      this.itemForm.controls['transactionCategoryId'].setValue('');
+    }
   }
 }

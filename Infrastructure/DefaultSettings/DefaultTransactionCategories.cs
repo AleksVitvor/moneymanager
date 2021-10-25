@@ -26,6 +26,10 @@
             new TransactionCategory()
             {
                 Description = "Salary"
+            },
+            new TransactionCategory()
+            {
+                Description = "Universal"
             }
         };
     }
