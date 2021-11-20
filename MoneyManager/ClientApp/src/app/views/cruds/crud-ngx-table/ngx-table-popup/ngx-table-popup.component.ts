@@ -8,6 +8,7 @@ import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
 import { CrudService } from '../../crud.service';
 import { TransactionCategoryComponent } from "./transaction-category-popup/transaction-category-popup.component";
+import { CurrencyModel } from "../../../../shared/models/CurrencyModel";
 
 @Component({
   selector: 'app-ngx-table-popup',
@@ -19,9 +20,11 @@ export class NgxTablePopupComponent implements OnInit, OnDestroy {
     {value: 2, viewValue: 'Refill'}
   ];
   transactionCategories: TransactionCategoryModel[];
+  currencies: CurrencyModel[];
   public getCategoriesSub: Subscription;
   public updateCategoriesSub: Subscription;
   public removeCategoriesSub: Subscription;
+  public getCurrenciesSub: Subscription;
   public itemForm: FormGroup;
   public selectedValue: string;
   constructor(
@@ -41,6 +44,7 @@ export class NgxTablePopupComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getCategories();
+    this.getCurrencies();
     this.buildItemForm(this.data.payload);
   }
 
@@ -56,6 +60,10 @@ export class NgxTablePopupComponent implements OnInit, OnDestroy {
     if (this.removeCategoriesSub) {
       this.removeCategoriesSub.unsubscribe();
     }
+
+    if (this.getCurrenciesSub) {
+      this.getCurrenciesSub.unsubscribe();
+    }
   }
 
   getCategories() {
@@ -68,6 +76,16 @@ export class NgxTablePopupComponent implements OnInit, OnDestroy {
         });
   }
 
+  getCurrencies() {
+    this.crudService.getCurrencies()
+      .subscribe(data => {
+        this.currencies = data;
+        this.itemForm.controls['currencyId']
+          .setValue(this.data.payload.currencyId !== undefined ? this.currencies
+            .find(x => x.value === this.data.payload.currencyId).value : '');
+      });
+  }
+
   buildItemForm(item) {
     this.itemForm = this.fb.group({
       storedAmount: [item.storedAmount || '', Validators.required],
@@ -76,7 +94,8 @@ export class NgxTablePopupComponent implements OnInit, OnDestroy {
       ],
       transactionCategoryId: [ '', Validators.required ],
       transactionDate: [item.transactionDate || '', Validators.required],
-      isRepeatable: [item.isRepeatable || false]
+      isRepeatable: [item.isRepeatable || false],
+      currencyId: ['', Validators.required]
     });
   }
 
@@ -86,7 +105,6 @@ export class NgxTablePopupComponent implements OnInit, OnDestroy {
 
   change() {
     if (this.itemForm.controls['transactionCategoryId'].value === '-1') {
-      console.log('Add an option');
       const dialogRef = this.dialog.open(TransactionCategoryComponent, {
         width: '300px',
         data: { options: this.transactionCategories },

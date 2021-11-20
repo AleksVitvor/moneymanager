@@ -244,11 +244,15 @@ export class NavigationService {
       state: 'transaction'
     },
     {
-      name: 'Transaction Types',
-      type: 'link',
-      tooltip: 'Transaction types',
-      icon: 'inbox',
-      state: 'types'
+      name: 'Reports',
+      type: 'dropDown',
+      tooltip: 'Reports',
+      icon: 'show_chart',
+      state: 'chart',
+      sub: [
+        { name: 'General', state: '' },
+        { name: 'Expenses vs. Refill', state: 'expenses-vs-refill'}
+      ]
     },
     {
       name: 'CHAT',

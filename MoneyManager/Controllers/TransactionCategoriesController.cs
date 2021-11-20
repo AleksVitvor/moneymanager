@@ -1,9 +1,7 @@
-﻿using Application.DTOs.TransactionDTOs;
-using Application.Services.TransactionCategoriesService;
-
-namespace MoneyManager.Controllers
+﻿namespace MoneyManager.Controllers
 {
-    using Application.Services.TransactionService;
+    using Application.DTOs.TransactionDTOs;
+    using Application.Services.TransactionCategoriesService;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System;

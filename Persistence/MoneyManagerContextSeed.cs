@@ -12,6 +12,8 @@
 
             IList<TransactionType> transactionTypes = new List<TransactionType>();
 
+            IList<Currency> currencies = new List<Currency>();
+
             if (!context.Roles.Any())
             {
                 sampleRole.Add(new Role()
@@ -41,6 +43,23 @@
                 });
 
                 context.TransactionTypes.AddRange(transactionTypes);
+
+                context.SaveChanges();
+            }
+
+            if (!context.Currencies.Any())
+            {
+                currencies.Add(new Currency
+                {
+                    CurrencyCode = "EUR"
+                });
+
+                currencies.Add(new Currency
+                {
+                    CurrencyCode = "USD"
+                });
+
+                context.Currencies.AddRange(currencies);
 
                 context.SaveChanges();
             }

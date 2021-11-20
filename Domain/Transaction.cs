@@ -34,7 +34,7 @@ namespace Domain
         public virtual TransactionCategory TransactionCategory { get; set; }
 
         [Required]
-        [Column("TransactionDate")]
+        [Column("TransactionDate", TypeName = "Date")]
         public DateTime TransactionDate { get; set; }
 
         [Column("ChildTransaction")]
@@ -53,6 +53,13 @@ namespace Domain
         public int UserId { get; set; }
 
         public virtual User User { get; set; }
+
+        [Required]
+        [Column("CurrencyId")]
+        [ForeignKey("Currency")]
+        public int CurrencyId { get; set; }
+
+        public virtual Currency Currency { get; set; }
 
     }
 }

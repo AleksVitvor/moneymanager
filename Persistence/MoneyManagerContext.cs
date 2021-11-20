@@ -19,6 +19,10 @@
 
         public DbSet<TransactionCategory> TransactionCategories { get; set; }
 
+        public DbSet<Currency> Currencies { get; set; }
+
+        public DbSet<ExchangeRates> ExchangeRates { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

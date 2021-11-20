@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
 
 @Injectable()
 export class CrudService {
@@ -38,5 +37,9 @@ export class CrudService {
 
   removeCategory(itemId): Observable<any> {
     return this.http.delete('/api/transactioncategories?categoryId=' + itemId);
+  }
+
+  getCurrencies(): Observable<any> {
+    return this.http.get(`/api/currency`);
   }
 }

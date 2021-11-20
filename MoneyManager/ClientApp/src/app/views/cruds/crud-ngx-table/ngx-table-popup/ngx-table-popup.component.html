@@ -1,72 +1,82 @@
 <h1 matDialogTitle>{{data.title}}</h1>
   <form [formGroup]="itemForm" (ngSubmit)="submit()">
-  <div fxLayout="row wrap" fxLayout.lt-sm="column">
-    <div fxFlex="50"  class="pr-16">
-      <mat-form-field class="full-width">
-        <input
-        matInput
-        type="number"
-        name="storedAmount"
-        [formControl]="itemForm.controls['storedAmount']"
-        placeholder="Amount">
-      </mat-form-field>
-    </div>
+    <div fxLayout="row wrap" fxLayout.lt-sm="column">
+      <div fxFlex="50" class="pr-16">
+        <mat-form-field class="full-width">
+          <input matInput
+                 type="number"
+                 name="storedAmount"
+                 [formControl]="itemForm.controls['storedAmount']"
+                 placeholder="Amount">
+        </mat-form-field>
+      </div>
 
-    <div fxFlex="50"  class="pr-16">
-      <mat-form-field class="full-width">
-        <input
-          matInput
-          type="datetime-local"
-          name="transactionDate"
-          [formControl]="itemForm.controls['transactionDate']"
-          placeholder="Date">
-      </mat-form-field>
-    </div>
+      <div fxFlex="50" class="pr-16">
+        <mat-form-field class="full-width">
+          <input matInput
+                 type="datetime-local"
+                 name="transactionDate"
+                 [formControl]="itemForm.controls['transactionDate']"
+                 placeholder="Date">
+        </mat-form-field>
+      </div>
 
-    <div fxFlex="50"  class="pr-16">
-      <mat-form-field  class="full-width" appearance="fill">
-        <mat-label>Type</mat-label>
-        <mat-select
-          matInput
-          [ngModel]
-          formControlName="transactionTypeId">
-          <mat-option *ngFor="let type of transactionTypes" [value]="type.value">
-            {{type.viewValue}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+      <div fxFlex="50" class="pr-16">
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Type</mat-label>
+          <mat-select matInput
+                      [ngModel]
+                      formControlName="transactionTypeId">
+            <mat-option *ngFor="let type of transactionTypes" [value]="type.value">
+              {{type.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-    <div fxFlex="50"  class="pr-16">
-      <mat-form-field  class="full-width" appearance="fill">
-        <mat-label>Category</mat-label>
-        <mat-select matInput
-                    [ngModel]
-                    [(value)]="selectedValue"
-                    formControlName="transactionCategoryId"
-                    (selectionChange)="change()">
-          <mat-option *ngFor="let category of transactionCategories" [value]="category.value">
-            <div style="display:flex; justify-content: space-between">
-              <span>{{ category.viewValue }}</span>
-              <span></span>
-              <span (click)="deleteOption($event, category)"><mat-icon svgIcon="delete"></mat-icon></span>
-            </div>
-          </mat-option>
-          <mat-option [value]="'-1'">
-            Define new category
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+      <div fxFlex="50" class="pr-16">
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Category</mat-label>
+          <mat-select matInput
+                      [ngModel]
+                      [(value)]="selectedValue"
+                      formControlName="transactionCategoryId"
+                      (selectionChange)="change()">
+            <mat-option *ngFor="let category of transactionCategories" [value]="category.value">
+              <div style="display:flex; justify-content: space-between">
+                <span>{{ category.viewValue }}</span>
+                <span></span>
+                <span (click)="deleteOption($event, category)"><mat-icon svgIcon="delete"></mat-icon></span>
+              </div>
+            </mat-option>
+            <mat-option [value]="'-1'">
+              Define new category
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-    <div fxFlex="50"  class="pt-16 pr-16">
-      <mat-slide-toggle [formControl]="itemForm.controls['isRepeatable']">Repeatable</mat-slide-toggle>
-    </div>
+      <div fxFlex="50" class="pr-16">
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Currency</mat-label>
+          <mat-select matInput
+                      [ngModel]
+                      formControlName="currencyId">
+            <mat-option *ngFor="let currency of currencies" [value]="currency.value">
+              {{currency.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-    <div fxFlex="100" class="mt-16">
-      <button mat-raised-button color="primary" [disabled]="itemForm.invalid">{{"SAVE" | translate }}</button>
-      <span fxFlex></span>
-      <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Cancel</button>
+      <div fxFlex="50" class="pt-16 pr-16">
+        <mat-slide-toggle [formControl]="itemForm.controls['isRepeatable']">Repeatable</mat-slide-toggle>
+      </div>
+
+      <div fxFlex="100" class="mt-16">
+        <button mat-raised-button color="primary" [disabled]="itemForm.invalid">{{"SAVE" | translate }}</button>
+        <span fxFlex></span>
+        <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Cancel</button>
+      </div>
     </div>
-  </div>
   </form>

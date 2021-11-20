@@ -4,6 +4,7 @@
     using Application.Services;
     using Application.Services.LoginService;
     using Infrastructure.Options;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.IdentityModel.Tokens;
     using System;
@@ -57,6 +58,7 @@
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetUser()
         {
             try

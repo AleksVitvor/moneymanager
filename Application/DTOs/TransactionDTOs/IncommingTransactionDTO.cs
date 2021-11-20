@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Application.DTOs.TransactionDTOs
+﻿namespace Application.DTOs.TransactionDTOs
 {
+    using System;
+
     public class IncommingTransactionDTO
     {
         public int Id { get; set; }
@@ -21,5 +17,7 @@ namespace Application.DTOs.TransactionDTOs
         public DateTime TransactionDate { get; set; }
 
         public int UserId { get; set; }
+
+        public int CurrencyId { get; set; }
     }
 }

@@ -40,6 +40,7 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\shared\models\registration.model.ts" />
     <None Remove="ClientApp\src\app\shared\services\registration.service.ts" />
+    <None Remove="ClientApp\src\app\views\charts\charts.service.ts" />
     <None Remove="ClientApp\src\app\views\cruds\crud-ngx-table\ngx-table-popup\transaction-category-popup\transaction-category-popup.component.ts" />
   </ItemGroup>
 
@@ -52,6 +53,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\shared\models\registration.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\services\registration.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\views\charts\charts.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\views\cruds\crud-ngx-table\ngx-table-popup\transaction-category-popup\transaction-category-popup.component.ts" />
   </ItemGroup>
 

@@ -1,6 +1,6 @@
 ﻿namespace Application.Services.LoginService
 {
-    using Application.DTOs.UserDTOs;
+    using DTOs.UserDTOs;
     using AutoMapper;
     using Domain;
     using Infrastructure.DefaultSettings;
@@ -56,7 +56,6 @@
                 user.TransactionCategories = DefaultTransactionCategories.TransactionCategories;
                 await context.Users.AddAsync(user);
                 await context.SaveChangesAsync();
-                return;
             }
             catch (Exception ex)
             {

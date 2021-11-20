@@ -17,5 +17,7 @@
         public string TransactionCategory { get; set; }
 
         public DateTime TransactionDate { get; set; }
+
+        public int CurrencyId { get; set; }
     }
 }
