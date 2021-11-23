@@ -5,7 +5,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ChartsModule } from 'ng2-charts';
-import { NgxEchartsModule } from 'ngx-echarts';
 
 import { ChartsRoutes } from "./charts.routing";
 import { LineChartComponent } from "./basic-line-chart/charts.component";
@@ -19,9 +18,6 @@ import { RefillVsExpensesComponent } from "./expenses-vs-refill-chart/expenses-v
     MatCardModule,
     FlexLayoutModule,
     ChartsModule,
-    NgxEchartsModule.forRoot({
-      echarts: () => import('echarts')
-    }),
     RouterModule.forChild(ChartsRoutes)
   ],
   declarations: [LineChartComponent, RefillVsExpensesComponent],
