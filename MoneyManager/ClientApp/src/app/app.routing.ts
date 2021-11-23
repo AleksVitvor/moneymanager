@@ -25,21 +25,14 @@ export const rootRouterConfig: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
-        path: 'others',
-        loadChildren: () => import('./views/others/others.module').then(m => m.OthersModule),
-      },
-      {
-        path: 'search',
-        loadChildren: () => import('./views/search-view/search-view.module').then(m => m.SearchViewModule)
-      },
-      {
         path: 'transaction',
         loadChildren: () => import('./views/cruds/cruds.module').then(m => m.CrudsModule)
-      },
-      {
-        path: 'chart',
-        loadChildren: () => import('./views/charts/charts.module').then(m => m.AppChartsModule)
       }
+      //,
+      //{
+      //  path: 'chart',
+      //  loadChildren: () => import('./views/charts/charts.module').then(m => m.AppChartsModule)
+      //}
     ]
   },
   {
