@@ -26,13 +26,8 @@ export const rootRouterConfig: Routes = [
     children: [
       {
         path: 'transaction',
-        loadChildren: () => import('./views/cruds/cruds.module').then(m => m.CrudsModule)
+        loadChildren: () => import('app/views/cruds/cruds.module').then(m => m.CrudsModule)
       }
-      //,
-      //{
-      //  path: 'chart',
-      //  loadChildren: () => import('./views/charts/charts.module').then(m => m.AppChartsModule)
-      //}
     ]
   },
   {

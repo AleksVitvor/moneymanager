@@ -20,11 +20,13 @@ import { CrudNgxTableComponent } from './crud-ngx-table/crud-ngx-table.component
 
 import { CrudsRoutes } from './cruds.routing';
 import { CrudService } from './crud.service';
-import { NgxTablePopupComponent } from './crud-ngx-table/ngx-table-popup/ngx-table-popup.component'
+import { NgxTablePopupComponent } from './crud-ngx-table/ngx-table-popup/ngx-table-popup.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatSelectModule } from '@angular/material/select';
 import { TransactionCategoryComponent } from
-  "./crud-ngx-table/ngx-table-popup/transaction-category-popup/transaction-category-popup.component";
+  './crud-ngx-table/ngx-table-popup/transaction-category-popup/transaction-category-popup.component';
+import {ChartsComponent} from './reports/charts.component';
+import {ChartsModule} from 'ng2-charts';
 
 @NgModule({
   imports: [
@@ -47,9 +49,10 @@ import { TransactionCategoryComponent } from
     SharedModule,
     RouterModule.forChild(CrudsRoutes),
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    ChartsModule
   ],
-  declarations: [CrudNgxTableComponent, NgxTablePopupComponent, TransactionCategoryComponent],
+  declarations: [CrudNgxTableComponent, NgxTablePopupComponent, TransactionCategoryComponent, ChartsComponent],
   providers: [CrudService],
   // entryComponents: [NgxTablePopupComponent]
 })

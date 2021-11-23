@@ -6,9 +6,9 @@ import { MatListModule } from '@angular/material/list';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ChartsModule } from 'ng2-charts';
 
-import { ChartsComponent } from './charts.component';
-import { ChartsRoutes } from "./charts.routing";
-import { ChartService } from './charts.service';
+import { ChartsComponent } from './base-chart-component/charts.component';
+import { ChartsRoutes } from './report.routing';
+import { ChartService } from './report.service';
 
 
 @NgModule({
@@ -23,4 +23,4 @@ import { ChartService } from './charts.service';
   declarations: [ChartsComponent],
   providers: [ChartService]
 })
-export class AppChartsModule { }
+export class ReportModule { }

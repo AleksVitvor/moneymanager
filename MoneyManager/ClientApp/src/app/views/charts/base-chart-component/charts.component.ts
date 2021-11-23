@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-charts',
-  templateUrl: './charts.component.html',
-  styleUrls: ['./charts.component.css']
+  templateUrl: './charts.component.html'
 })
 export class ChartsComponent implements OnInit {
 
@@ -15,7 +14,7 @@ export class ChartsComponent implements OnInit {
       position: 'bottom'
     }
   };
-  chartColors: Array <any> = [{
+  chartColors: any[] = [{
     backgroundColor: '#3f51b5',
     borderColor: '#3f51b5',
     pointBackgroundColor: '#3f51b5',
@@ -37,11 +36,11 @@ export class ChartsComponent implements OnInit {
     pointHoverBackgroundColor: '#fff',
     pointHoverBorderColor: 'rgba(148,159,177,0.8)'
   }];
-  
+
   /*
   * Line Chart Options
   */
-  lineChartData: Array <any> = [{
+  lineChartData: any[] = [{
     data: [5, 5, 7, 8, 4, 5, 5],
     label: 'Series A',
     borderWidth: 1
@@ -50,7 +49,7 @@ export class ChartsComponent implements OnInit {
     label: 'Series B',
     borderWidth: 1
   }];
-  lineChartLabels: Array <any> = ['1', '2', '3', '4', '5', '6', '7', '8'];
+  lineChartLabels: any[] = ['1', '2', '3', '4', '5', '6', '7', '8'];
   lineChartOptions: any = Object.assign({
     animation: false,
     scales: {
@@ -72,9 +71,9 @@ export class ChartsComponent implements OnInit {
       }]
     }
   }, this.sharedChartOptions);
-  public lineChartLegend: boolean = false;
-  public lineChartType: string = 'line';
-  lineChartPointsData: Array <any> = [{
+  public lineChartLegend = false;
+  public lineChartType = 'line';
+  lineChartPointsData: any[] = [{
     data: [6, 5, 8, 8, 5, 5, 4],
     label: 'Series A',
     borderWidth: 1,
@@ -126,8 +125,8 @@ export class ChartsComponent implements OnInit {
     { data: [65, 59, 90, 81, 56, 55, 40], label: 'Series A', borderWidth: 1 },
     { data: [28, 48, 40, 19, 96, 27, 100], label: 'Series B', borderWidth: 1 }
   ];
-  public radarChartType: string = 'radar';
-  public radarChartColors: Array<any> = [
+  public radarChartType = 'radar';
+  public radarChartColors: any[] = [
     {
       backgroundColor: 'rgba(36, 123, 160, 0.2)',
       borderColor: 'rgba(36, 123, 160, 0.6)',

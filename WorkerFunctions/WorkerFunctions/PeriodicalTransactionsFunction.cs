@@ -14,7 +14,7 @@ namespace WorkerFunctions
     public static class PeriodicalTransactionsFunction
     {
         [FunctionName("PeriodicalTransactionsFunction")]
-        public static async Task Run([TimerTrigger("0 0 12 * * ?")]TimerInfo myTimer, ILogger log)
+        public static async Task Run([TimerTrigger("0 0 4 * * *")]TimerInfo myTimer, ILogger log)
         {
             try
             {

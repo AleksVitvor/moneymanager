@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-import { ChartsComponent } from './charts.component';
+import { ChartsComponent } from './base-chart-component/charts.component';
 
 
 export const ChartsRoutes: Routes = [
