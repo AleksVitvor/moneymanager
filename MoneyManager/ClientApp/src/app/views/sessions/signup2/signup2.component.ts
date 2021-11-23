@@ -1,8 +1,12 @@
 import { CustomValidators } from 'ngx-custom-validators';
-import { ErrorStateMatcher } from '@angular/material/core';
+import { HttpClient } from "@angular/common/http";
 import { Validators, FormGroup, NgForm, FormGroupDirective, FormControl, AbstractControl, ValidationErrors } from "@angular/forms";
 import { FormBuilder } from "@angular/forms";
 import { Component, OnInit } from "@angular/core";
+import { catchError, first, map } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { JwtAuthService } from '../../../shared/services/auth/jwt-auth.service';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: "app-signup2",
@@ -11,12 +15,20 @@ import { Component, OnInit } from "@angular/core";
 })
 export class Signup2Component implements OnInit {
   signupForm: FormGroup;
+  loading: boolean;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    jwtAuth: JwtAuthService,
+    private http: HttpClient,
+    private router: Router) {
+    if (jwtAuth.isLoggedIn()) {
+      this.router.navigate(['/']);
+    }}
 
   ngOnInit() {
 
-    const password = new FormControl('', Validators.required);
+    const password = new FormControl('', [Validators.required, Validators.minLength(6)]);
     const confirmPassword = new FormControl('', CustomValidators.equalTo(password));
 
     this.signupForm = this.fb.group(
@@ -34,8 +46,19 @@ export class Signup2Component implements OnInit {
 
   onSubmit() {
     if (!this.signupForm.invalid) {
-      // do what you wnat with your data
-      console.log(this.signupForm.value);
-    }
+      return this.http.post('/api/register',
+        {
+          firstName: this.signupForm.value.firstName,
+          lastName: this.signupForm.value.lastName,
+          username: this.signupForm.value.username,
+          email: this.signupForm.value.email,
+          password: this.signupForm.value.password
+        })
+        .subscribe(response => {
+          this.router.navigateByUrl('/sessions/signin');
+        }, err => {
+          this.loading = false;
+        })
+    };
   }
 }

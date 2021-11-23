@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>New category</h1>
+
+<div mat-dialog-body>
+  <input
+    matInput
+    type='text'
+    placeholder="New category"
+    [(ngModel)]="option"
+    (ngModelChange)="checkDuplicate()" />
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" [mat-dialog-close]="option" [disabled]="option == undefined || duplicated">{{"SAVE" | translate }}</button>
+  <span fxFlex></span>
+  <button mat-button color="warn" type="button" (click)="cancel()">Cancel</button>
+</div>

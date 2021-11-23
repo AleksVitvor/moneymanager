@@ -1,0 +1,40 @@
+<div fxLayout="row wrap">
+  <div fxFlex="100" fxFlex.gt-sm="50">
+    <mat-card class="p-0">
+      <mat-card-title class="">
+        <div class="card-title-text">Refill vs. Expenses</div>
+        <mat-divider></mat-divider>
+      </mat-card-title>
+      <mat-card-content>
+        <canvas baseChart
+                class="chart"
+                [datasets]="lineChartData"
+                [labels]="lineChartLabels"
+                [options]="lineChartOptions"
+                [colors]="chartColors"
+                [legend]="lineChartLegend"
+                [chartType]="lineChartType"></canvas>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div fxFlex="100" fxFlex.gt-sm="50">
+    <mat-card class="p-0">
+      <mat-card-title class="">
+        <div class="card-title-text">By Categories</div>
+        <mat-divider></mat-divider>
+      </mat-card-title>
+      <mat-card-content>
+        <canvas class="chart"
+                baseChart
+                [datasets]="radarChartData"
+                [labels]="radarChartLabels"
+                [legend]="false"
+                [colors]="chartColors"
+                [chartType]="radarChartType"
+                (chartHover)="radarChartHovered($event)"
+                (chartClick)="radarChartClicked($event)"></canvas>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

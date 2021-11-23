@@ -6,7 +6,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 export const rootRouterConfig: Routes = [
   {
     path: '',
-    redirectTo: 'others/blank',
+    redirectTo: 'transaction',
     pathMatch: 'full'
   },
   {
@@ -16,7 +16,6 @@ export const rootRouterConfig: Routes = [
       {
         path: 'sessions',
         loadChildren: () => import('./views/sessions/sessions.module').then(m => m.SessionsModule),
-        data: { title: 'Session'}
       }
     ]
   },
@@ -28,13 +27,19 @@ export const rootRouterConfig: Routes = [
       {
         path: 'others',
         loadChildren: () => import('./views/others/others.module').then(m => m.OthersModule),
-        data: { title: 'Others', breadcrumb: 'OTHERS'}
       },
       {
         path: 'search',
         loadChildren: () => import('./views/search-view/search-view.module').then(m => m.SearchViewModule)
+      },
+      {
+        path: 'transaction',
+        loadChildren: () => import('./views/cruds/cruds.module').then(m => m.CrudsModule)
+      },
+      {
+        path: 'chart',
+        loadChildren: () => import('./views/charts/charts.module').then(m => m.AppChartsModule)
       }
-      
     ]
   },
   {

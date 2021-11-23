@@ -44,7 +44,7 @@ export class LayoutService {
     this.setAppLayout(
       // ******** SET YOUR LAYOUT OPTIONS HERE *********
       {
-        navigationPos: 'side', // side, top
+        navigationPos: 'top', // side, top
         sidebarStyle: 'full', // full, compact, closed
         sidebarColor: 'slate', // http://demos.ui-lib.com/egret-doc/#egret-colors
         sidebarCompactToggle: false, // applied when "sidebarStyle" is "compact"
