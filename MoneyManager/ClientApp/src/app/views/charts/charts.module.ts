@@ -6,10 +6,10 @@ import { MatListModule } from '@angular/material/list';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ChartsModule } from 'ng2-charts';
 
+import { ChartsComponent } from './charts.component';
 import { ChartsRoutes } from "./charts.routing";
-import { LineChartComponent } from "./basic-line-chart/charts.component";
-import { ChartService } from "./charts.service";
-import { RefillVsExpensesComponent } from "./expenses-vs-refill-chart/expenses-vs-refill-chart.component";
+import { ChartService } from './charts.service';
+
 
 @NgModule({
   imports: [
@@ -20,7 +20,7 @@ import { RefillVsExpensesComponent } from "./expenses-vs-refill-chart/expenses-v
     ChartsModule,
     RouterModule.forChild(ChartsRoutes)
   ],
-  declarations: [LineChartComponent, RefillVsExpensesComponent],
+  declarations: [ChartsComponent],
   providers: [ChartService]
 })
 export class AppChartsModule { }

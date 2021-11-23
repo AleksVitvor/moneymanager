@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ChartService } from "../charts.service";
 
 @Component({
   selector: 'app-charts',
   templateUrl: './charts.component.html',
   styleUrls: ['./charts.component.css']
 })
-export class LineChartComponent implements OnInit {
+export class ChartsComponent implements OnInit {
 
   sharedChartOptions: any = {
     responsive: true,
-    //maintainAspectRatio: false,
+    // maintainAspectRatio: false,
     legend: {
       display: false,
       position: 'bottom'
@@ -37,18 +36,21 @@ export class LineChartComponent implements OnInit {
     pointBorderColor: '#fff',
     pointHoverBackgroundColor: '#fff',
     pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    }];
-
+  }];
+  
+  /*
+  * Line Chart Options
+  */
   lineChartData: Array <any> = [{
     data: [5, 5, 7, 8, 4, 5, 5],
     label: 'Series A',
     borderWidth: 1
   }, {
-    data: [5, 4, 4, 3, 6, 2, 5, 0, 8],
+    data: [5, 4, 4, 3, 6, 2, 5],
     label: 'Series B',
     borderWidth: 1
   }];
-  lineChartLabels: Array <any> = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  lineChartLabels: Array <any> = ['1', '2', '3', '4', '5', '6', '7', '8'];
   lineChartOptions: any = Object.assign({
     animation: false,
     scales: {
@@ -70,9 +72,54 @@ export class LineChartComponent implements OnInit {
       }]
     }
   }, this.sharedChartOptions);
-  public lineChartType: string = 'line';
   public lineChartLegend: boolean = false;
+  public lineChartType: string = 'line';
+  lineChartPointsData: Array <any> = [{
+    data: [6, 5, 8, 8, 5, 5, 4],
+    label: 'Series A',
+    borderWidth: 1,
+    fill: false,
+    pointRadius: 10,
+    pointHoverRadius: 15,
+    showLine: false
+  }, {
+    data: [5, 4, 4, 2, 6, 2, 5],
+    label: 'Series B',
+    borderWidth: 1,
+    fill: false,
+    pointRadius: 10,
+    pointHoverRadius: 15,
+    showLine: false
+  }];
+  lineChartPointsOptions: any = Object.assign({
+    scales: {
+      xAxes: [{
+        gridLines: {
+          color: 'rgba(0,0,0,0.02)',
+          zeroLineColor: 'rgba(0,0,0,0.02)'
+        }
+      }],
+      yAxes: [{
+        gridLines: {
+          color: 'rgba(0,0,0,0.02)',
+          zeroLineColor: 'rgba(0,0,0,0.02)'
+        },
+        ticks: {
+          beginAtZero: true,
+          suggestedMax: 9,
+        }
+      }]
+    },
+    elements: {
+      point: {
+        pointStyle: 'rectRot',
+      }
+    }
+  }, this.sharedChartOptions);
 
+  /*
+  * Radar Chart Options
+  */
   public radarChartLabels: string[] = ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'];
 
   public radarChartData: any = [
@@ -99,29 +146,11 @@ export class LineChartComponent implements OnInit {
     }
   ];
 
-  constructor(
-    private crudService: ChartService) {
+  constructor() {
   }
-  ngOnInit() {
-    console.log("Chart");
-    this.getRefills();
-    this.getExpenses();
-    this.getDates();
-  }
+  ngOnInit() {}
 
-  getRefills() {
-
-  }
-
-  getExpenses() {
-
-  }
-
-  getDates() {
-
-  }
-  
-  /*
+    /*
   * Line Chart Event Handler
   */
   public lineChartClicked(e: any): void {
@@ -129,8 +158,12 @@ export class LineChartComponent implements OnInit {
   public lineChartHovered(e: any): void {
   }
 
+  /*
+  * Rader Chart Event Handler
+  */
   public radarChartClicked(e: any): void {
   }
   public radarChartHovered(e: any): void {
   }
+
 }
