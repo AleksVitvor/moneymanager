@@ -27,6 +27,7 @@ import { TransactionCategoryComponent } from
   './crud-ngx-table/ngx-table-popup/transaction-category-popup/transaction-category-popup.component';
 import {ChartsComponent} from './reports/charts.component';
 import {ChartsModule} from 'ng2-charts';
+import { ReportService } from './report.service';
 
 @NgModule({
   imports: [
@@ -53,7 +54,7 @@ import {ChartsModule} from 'ng2-charts';
     ChartsModule
   ],
   declarations: [CrudNgxTableComponent, NgxTablePopupComponent, TransactionCategoryComponent, ChartsComponent],
-  providers: [CrudService],
+  providers: [CrudService, ReportService],
   // entryComponents: [NgxTablePopupComponent]
 })
 export class CrudsModule { }
