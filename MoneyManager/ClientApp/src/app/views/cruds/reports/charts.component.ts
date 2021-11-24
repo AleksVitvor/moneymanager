@@ -50,8 +50,16 @@ export class ChartsComponent implements OnInit, OnDestroy{
   /*
   * Line Chart Options
   */
-  lineChartData: any[] = [];
-  lineChartLabels: any[] = [];
+  lineChartData: any[] = [{
+    data: [5, 5, 7, 8, 4, 5, 5],
+    label: 'Series A',
+    borderWidth: 1
+  }, {
+    data: [5, 4, 4, 3, 6, 2, 5],
+    label: 'Series B',
+    borderWidth: 1
+  }];
+  lineChartLabels: any[] = ['1', '2', '3', '4', '5', '6', '7', '8'];
   lineChartOptions: any = Object.assign({
     animation: false,
     scales: {
@@ -79,9 +87,12 @@ export class ChartsComponent implements OnInit, OnDestroy{
   /*
   * Radar Chart Options
   */
-  public radarChartLabels: string[] = [];
+  public radarChartLabels: string[] = ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'];
 
-  public radarChartData: any[] = [];
+  public radarChartData: any = [
+    { data: [65, 59, 90, 81, 56, 55, 40], label: 'Series A', borderWidth: 1 },
+    { data: [28, 48, 40, 19, 96, 27, 100], label: 'Series B', borderWidth: 1 }
+  ];
   public radarChartType = 'radar';
   public radarChartColors: any[] = [
     {
