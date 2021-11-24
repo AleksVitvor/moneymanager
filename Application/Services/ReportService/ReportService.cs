@@ -117,7 +117,7 @@
             {
                 var result = new List<string>();
                 var monthDif = MonthDifference(startDate, endDate);
-                for (int i = 0; i <= monthDif; i++) 
+                for (int i = 0; i < monthDif; i++) 
                 {
                     result.Add(startDate.AddMonths(i).ToString("Y"));
                 }
