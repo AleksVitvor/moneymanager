@@ -2,6 +2,7 @@ using Application.Profiles;
 using Application.Services.CurrencyService;
 using Application.Services.LoginService;
 using Application.Services.MappingService;
+using Application.Services.ReportService;
 using Application.Services.TransactionCategoriesService;
 using Application.Services.TransactionService;
 using Infrastructure.Options;
@@ -73,6 +74,7 @@ namespace MoneyManager
             services.AddTransient<ITransactionService, TransactionService>();
             services.AddTransient<ITransactionCategoriesService, TransactionCategoriesService>();
             services.AddTransient<ICurrencyService, CurrencyService>();
+            services.AddTransient<IReportService, ReportService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

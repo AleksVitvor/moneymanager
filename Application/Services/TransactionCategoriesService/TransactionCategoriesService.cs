@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Application.DTOs.TransactionDTOs;
-using AutoMapper;
-using Domain;
-using Microsoft.EntityFrameworkCore;
-using Persistence;
-
-namespace Application.Services.TransactionCategoriesService
+﻿namespace Application.Services.TransactionCategoriesService
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Application.DTOs.TransactionDTOs;
+    using AutoMapper;
+    using Domain;
+    using Microsoft.EntityFrameworkCore;
+    using Persistence;
+
     public class TransactionCategoriesService: BaseService, ITransactionCategoriesService
     {
         public TransactionCategoriesService(MoneyManagerContext context, IMapper mapper)
@@ -23,6 +23,7 @@ namespace Application.Services.TransactionCategoriesService
             {
                 var transactions = await context.TransactionCategories
                     .Where(x => x.UserId == userId && x.Description != "Universal")
+                    .OrderBy(x => x.Description)
                     .ToListAsync();
                 return mapper.Map<List<TransactionCategory>, List<TransactionCategoryDTO>>(transactions);
             }

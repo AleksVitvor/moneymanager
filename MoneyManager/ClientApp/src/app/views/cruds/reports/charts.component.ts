@@ -1,11 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { CrudService } from '../crud.service';
+import { ReportService } from '../report.service';
 
 @Component({
   selector: 'app-charts',
   templateUrl: './charts.component.html'
 })
-export class ChartsComponent implements OnInit {
-
+export class ChartsComponent implements OnInit, OnDestroy{
+  public getCategoriesSub: Subscription;
+  public getCategoriesValuesSub: Subscription;
+  public getExpensesRefillsSub: Subscription;
+  public getExpensesRefillsDatesSub: Subscription;
+  constructor(
+    private reportService: ReportService,
+    private crudService: CrudService
+  ) { }
   sharedChartOptions: any = {
     responsive: true,
     // maintainAspectRatio: false,
@@ -40,16 +50,8 @@ export class ChartsComponent implements OnInit {
   /*
   * Line Chart Options
   */
-  lineChartData: any[] = [{
-    data: [5, 5, 7, 8, 4, 5, 5],
-    label: 'Series A',
-    borderWidth: 1
-  }, {
-    data: [5, 4, 4, 3, 6, 2, 5],
-    label: 'Series B',
-    borderWidth: 1
-  }];
-  lineChartLabels: any[] = ['1', '2', '3', '4', '5', '6', '7', '8'];
+  lineChartData: any[] = [];
+  lineChartLabels: any[] = [];
   lineChartOptions: any = Object.assign({
     animation: false,
     scales: {
@@ -73,58 +75,13 @@ export class ChartsComponent implements OnInit {
   }, this.sharedChartOptions);
   public lineChartLegend = false;
   public lineChartType = 'line';
-  lineChartPointsData: any[] = [{
-    data: [6, 5, 8, 8, 5, 5, 4],
-    label: 'Series A',
-    borderWidth: 1,
-    fill: false,
-    pointRadius: 10,
-    pointHoverRadius: 15,
-    showLine: false
-  }, {
-    data: [5, 4, 4, 2, 6, 2, 5],
-    label: 'Series B',
-    borderWidth: 1,
-    fill: false,
-    pointRadius: 10,
-    pointHoverRadius: 15,
-    showLine: false
-  }];
-  lineChartPointsOptions: any = Object.assign({
-    scales: {
-      xAxes: [{
-        gridLines: {
-          color: 'rgba(0,0,0,0.02)',
-          zeroLineColor: 'rgba(0,0,0,0.02)'
-        }
-      }],
-      yAxes: [{
-        gridLines: {
-          color: 'rgba(0,0,0,0.02)',
-          zeroLineColor: 'rgba(0,0,0,0.02)'
-        },
-        ticks: {
-          beginAtZero: true,
-          suggestedMax: 9,
-        }
-      }]
-    },
-    elements: {
-      point: {
-        pointStyle: 'rectRot',
-      }
-    }
-  }, this.sharedChartOptions);
 
   /*
   * Radar Chart Options
   */
-  public radarChartLabels: string[] = ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'];
+  public radarChartLabels: string[] = [];
 
-  public radarChartData: any = [
-    { data: [65, 59, 90, 81, 56, 55, 40], label: 'Series A', borderWidth: 1 },
-    { data: [28, 48, 40, 19, 96, 27, 100], label: 'Series B', borderWidth: 1 }
-  ];
+  public radarChartData: any[] = [];
   public radarChartType = 'radar';
   public radarChartColors: any[] = [
     {
@@ -145,11 +102,56 @@ export class ChartsComponent implements OnInit {
     }
   ];
 
-  constructor() {
+  ngOnInit() {
+    this.getCategories();
+    this.getMonth();
+    this.getValuesByCategories();
+    this.getExpensesRefill();
   }
-  ngOnInit() {}
+  ngOnDestroy() {
+    if (this.getCategoriesSub) {
+      this.getCategoriesSub.unsubscribe();
+    }
+    if (this.getCategoriesValuesSub) {
+      this.getCategoriesValuesSub.unsubscribe();
+    }
+    if (this.getExpensesRefillsDatesSub) {
+      this.getExpensesRefillsDatesSub.unsubscribe();
+    }
+    if (this.getExpensesRefillsSub) {
+      this.getExpensesRefillsSub.unsubscribe();
+    }
+  }
 
-    /*
+  getCategories() {
+    this.crudService.getCategories()
+      .subscribe(data => {
+        this.radarChartLabels = data.map(function (item) { return item.viewValue });
+      });
+  }
+
+  getMonth() {
+    this.reportService.getMonth()
+      .subscribe(data => {
+        this.lineChartLabels = data;
+      });
+  }
+
+  getExpensesRefill() {
+    this.reportService.getExpensesVsRefill()
+      .subscribe(data => {
+        this.lineChartData = data;
+      });
+  }
+
+  getValuesByCategories() {
+    this.reportService.getCategoriesValues()
+      .subscribe(data => {
+        this.radarChartData = data;
+      });
+  }
+
+  /*
   * Line Chart Event Handler
   */
   public lineChartClicked(e: any): void {

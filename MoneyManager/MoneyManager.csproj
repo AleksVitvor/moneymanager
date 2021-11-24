@@ -46,6 +46,7 @@
     <None Remove="ClientApp\src\app\shared\services\registration.service.ts" />
     <None Remove="ClientApp\src\app\views\charts\charts.service.ts" />
     <None Remove="ClientApp\src\app\views\cruds\crud-ngx-table\ngx-table-popup\transaction-category-popup\transaction-category-popup.component.ts" />
+    <None Remove="ClientApp\src\app\views\cruds\report.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
