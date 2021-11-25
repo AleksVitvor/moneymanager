@@ -24,7 +24,9 @@
                 var transactions = await context.Transactions
                     .Include(x => x.TransactionCategory)
                     .Include(x => x.TransactionType)
-                    .Where(x => x.UserId == userId).ToListAsync();
+                    .Where(x => x.UserId == userId)
+                    .OrderByDescending(x => x.TransactionDate)
+                    .ToListAsync();
                 return mapper.Map<List<Transaction>, List<TransactionDTO>>(transactions);
             }
             catch (Exception ex)
