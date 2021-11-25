@@ -11,6 +11,6 @@ namespace ExchangeRateLibrary.Model
 
         public DateTime Date { get; set; }
 
-        public List<CurrencyExchangeRate> Rates { get; set; }
+        public CurrencyExchangeRate Rates { get; set; }
     }
 }

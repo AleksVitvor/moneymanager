@@ -2,8 +2,16 @@
 {
     public class CurrencyExchangeRate
     {
-        public string Code { get; set; }
+        public double CHF { get; set; }
 
-        public double Rate { get; set; }
+        public double USD { get; set; }
+
+        public double EUR { get; set; }
+
+        public double GBP { get; set; }
+
+        public double RUB { get; set; }
+
+        public double BYN { get; set; }
     }
 }
