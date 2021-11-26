@@ -54,7 +54,8 @@ namespace WorkerFunctions
                         newRates.Add(new ExchangeRates
                         {
                             Currency = newCurrency,
-                            ExchangeRate = todayRate.Rates.RUB
+                            ExchangeRate = todayRate.Rates.RUB,
+                            Date = todayRate.Date
                         });
                     }
                     else
@@ -62,7 +63,8 @@ namespace WorkerFunctions
                         newRates.Add(new ExchangeRates
                         {
                             CurrencyId = rubId.Value,
-                            ExchangeRate = todayRate.Rates.RUB
+                            ExchangeRate = todayRate.Rates.RUB,
+                            Date = todayRate.Date
                         });
                     }
 
@@ -76,7 +78,8 @@ namespace WorkerFunctions
                         newRates.Add(new ExchangeRates
                         {
                             Currency = newCurrency,
-                            ExchangeRate = todayRate.Rates.BYN
+                            ExchangeRate = todayRate.Rates.BYN,
+                            Date = todayRate.Date
                         });
                     }
                     else
@@ -84,7 +87,8 @@ namespace WorkerFunctions
                         newRates.Add(new ExchangeRates
                         {
                             CurrencyId = bynId.Value,
-                            ExchangeRate = todayRate.Rates.BYN
+                            ExchangeRate = todayRate.Rates.BYN,
+                            Date = todayRate.Date
                         });
                     }
 
@@ -98,7 +102,8 @@ namespace WorkerFunctions
                         newRates.Add(new ExchangeRates
                         {
                             Currency = newCurrency,
-                            ExchangeRate = todayRate.Rates.EUR
+                            ExchangeRate = todayRate.Rates.EUR,
+                            Date = todayRate.Date
                         });
                     }
                     else
@@ -106,7 +111,8 @@ namespace WorkerFunctions
                         newRates.Add(new ExchangeRates
                         {
                             CurrencyId = eurId.Value,
-                            ExchangeRate = todayRate.Rates.EUR
+                            ExchangeRate = todayRate.Rates.EUR,
+                            Date = todayRate.Date
                         });
                     }
 
@@ -120,7 +126,8 @@ namespace WorkerFunctions
                         newRates.Add(new ExchangeRates
                         {
                             Currency = newCurrency,
-                            ExchangeRate = todayRate.Rates.USD
+                            ExchangeRate = todayRate.Rates.USD,
+                            Date = todayRate.Date
                         });
                     }
                     else
@@ -128,7 +135,8 @@ namespace WorkerFunctions
                         newRates.Add(new ExchangeRates
                         {
                             CurrencyId = usdId.Value,
-                            ExchangeRate = todayRate.Rates.USD
+                            ExchangeRate = todayRate.Rates.USD,
+                            Date = todayRate.Date
                         });
                     }
 
@@ -142,7 +150,8 @@ namespace WorkerFunctions
                         newRates.Add(new ExchangeRates
                         {
                             Currency = newCurrency,
-                            ExchangeRate = todayRate.Rates.GBP
+                            ExchangeRate = todayRate.Rates.GBP,
+                            Date = todayRate.Date
                         });
                     }
                     else
@@ -150,7 +159,8 @@ namespace WorkerFunctions
                         newRates.Add(new ExchangeRates
                         {
                             CurrencyId = gbrId.Value,
-                            ExchangeRate = todayRate.Rates.GBP
+                            ExchangeRate = todayRate.Rates.GBP,
+                            Date = todayRate.Date
                         });
                     }
 
@@ -164,7 +174,8 @@ namespace WorkerFunctions
                         newRates.Add(new ExchangeRates
                         {
                             Currency = newCurrency,
-                            ExchangeRate = todayRate.Rates.CHF
+                            ExchangeRate = todayRate.Rates.CHF,
+                            Date = todayRate.Date
                         });
                     }
                     else
@@ -172,7 +183,8 @@ namespace WorkerFunctions
                         newRates.Add(new ExchangeRates
                         {
                             CurrencyId = chfId.Value,
-                            ExchangeRate = todayRate.Rates.CHF
+                            ExchangeRate = todayRate.Rates.CHF,
+                            Date = todayRate.Date
                         });
                     }
 
