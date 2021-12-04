@@ -19,9 +19,6 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
   availableLangs = [{
     name: 'English',
     code: 'en',
-  }, {
-    name: 'Spanish',
-    code: 'es',
   }]
   @Input() notificPanel;
   constructor(
