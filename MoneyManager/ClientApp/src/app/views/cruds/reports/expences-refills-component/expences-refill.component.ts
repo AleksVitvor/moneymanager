@@ -1,24 +1,33 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { CrudService } from '../crud.service';
-import { ReportService } from './report.service';
+import { CurrencyModel } from '../../../../shared/models/CurrencyModel';
+import { TransactionCategoryModel } from '../../../../shared/models/transactioncategory.model';
+import { CrudService } from '../../crud.service';
+import { ReportService } from '../report.service';
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: 'app-charts',
-  templateUrl: './charts.component.html'
+  templateUrl: './expences-refill.component.html'
 })
-export class ChartsComponent implements OnInit, OnDestroy{
+export class ExpensesRefillChartComponent implements OnInit, OnDestroy {
   public getCategoriesSub: Subscription;
   public getCategoriesValuesSub: Subscription;
   public getExpensesRefillsSub: Subscription;
   public getExpensesRefillsDatesSub: Subscription;
+  public itemForm: FormGroup;
+  currencies: CurrencyModel[];
   constructor(
     private reportService: ReportService,
-    private crudService: CrudService
+    private crudService: CrudService,
+    private fb: FormBuilder,
+    private http: HttpClient
   ) { }
+  title = 'Expenses vs. Refill (EUR)';
+
   sharedChartOptions: any = {
     responsive: true,
-    // maintainAspectRatio: false,
     legend: {
       display: false,
       position: 'bottom'
@@ -47,9 +56,6 @@ export class ChartsComponent implements OnInit, OnDestroy{
     pointHoverBorderColor: 'rgba(148,159,177,0.8)'
   }];
 
-  /*
-  * Line Chart Options
-  */
   lineChartData: any[] = [{
     data: [5, 5, 7, 8, 4, 5, 5],
     label: 'Series A',
@@ -84,68 +90,45 @@ export class ChartsComponent implements OnInit, OnDestroy{
   public lineChartLegend = false;
   public lineChartType = 'line';
 
-  /*
-  * Radar Chart Options
-  */
-  public radarChartLabels: string[] = ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'];
-
-  public radarChartData: any = [
-    { data: [65, 59, 90, 81, 56, 55, 40], label: 'Series A', borderWidth: 1 },
-    { data: [28, 48, 40, 19, 96, 27, 100], label: 'Series B', borderWidth: 1 }
-  ];
-  public radarChartType = 'radar';
-  public radarChartColors: any[] = [
-    {
-      backgroundColor: 'rgba(36, 123, 160, 0.2)',
-      borderColor: 'rgba(36, 123, 160, 0.6)',
-      pointBackgroundColor: 'rgba(36, 123, 160, 0.8)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(36, 123, 160, 0.8)'
-    },
-    {
-      backgroundColor: 'rgba(244, 67, 54, 0.2)',
-      borderColor: 'rgba(244, 67, 54, .8)',
-      pointBackgroundColor: 'rgba(244, 67, 54, .8)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(244, 67, 54, 1)'
-    }
-  ];
+  public lineChartClicked(e: any): void {
+  }
+  public lineChartHovered(e: any): void {
+  }
 
   ngOnInit() {
-    this.getCategories();
     this.getMonth();
-    this.getValuesByCategories();
     this.getExpensesRefill();
+    this.getCurrencies();
+    this.buildItemForm();
   }
   ngOnDestroy() {
-    if (this.getCategoriesSub) {
-      this.getCategoriesSub.unsubscribe();
-    }
-    if (this.getCategoriesValuesSub) {
-      this.getCategoriesValuesSub.unsubscribe();
-    }
-    if (this.getExpensesRefillsDatesSub) {
-      this.getExpensesRefillsDatesSub.unsubscribe();
-    }
-    if (this.getExpensesRefillsSub) {
-      this.getExpensesRefillsSub.unsubscribe();
-    }
+    
   }
 
-  getCategories() {
-    this.crudService.getCategories()
-      .subscribe(data => {
-        this.radarChartLabels = data.map(function (item) { return item.viewValue });
-      });
-  }
+  submit() {
+    if (!this.itemForm.invalid) {
+      let currencyCode = this.currencies.filter(x=>x.value === this.itemForm.value.currencyId)[0].viewValue;
+      this.title = 'Expenses vs. Refill (' + currencyCode + ')';
 
-  getMonth() {
-    this.reportService.getMonth()
+      this.reportService.getMonthByStartAndEnd(this.itemForm.value.startDate, this.itemForm.value.endDate)
       .subscribe(data => {
         this.lineChartLabels = data;
       });
+
+      return this.reportService.getExpensesVsRefillReport(this.itemForm.value.currencyId, this.itemForm.value.startDate, this.itemForm.value.endDate)
+        .subscribe(data => {
+          this.lineChartData = data;
+        }, err => {
+        })
+    };
+  }
+
+  buildItemForm() {
+    this.itemForm = this.fb.group({
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+      currencyId: ['', Validators.required]
+    });
   }
 
   getExpensesRefill() {
@@ -155,27 +138,18 @@ export class ChartsComponent implements OnInit, OnDestroy{
       });
   }
 
-  getValuesByCategories() {
-    this.reportService.getCategoriesValues()
+  getCurrencies() {
+    this.crudService.getCurrencies()
       .subscribe(data => {
-        this.radarChartData = data;
+        this.currencies = data;
+        this.itemForm.controls['currencyId'].setValue('');
       });
   }
 
-  /*
-  * Line Chart Event Handler
-  */
-  public lineChartClicked(e: any): void {
+  getMonth() {
+    this.reportService.getMonth()
+      .subscribe(data => {
+        this.lineChartLabels = data;
+      });
   }
-  public lineChartHovered(e: any): void {
-  }
-
-  /*
-  * Rader Chart Event Handler
-  */
-  public radarChartClicked(e: any): void {
-  }
-  public radarChartHovered(e: any): void {
-  }
-
 }

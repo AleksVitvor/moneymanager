@@ -8,6 +8,8 @@
     {
         Task<List<TransactionCategoryDTO>> GetTransactionCategories(int userId);
 
+        Task<List<TransactionCategoryDTO>> GetTransactionCategories(int userId, List<int> categories);
+
         Task<List<TransactionCategoryDTO>> CreateCategory(int userId, string newCategory);
 
         Task<List<TransactionCategoryDTO>> RemoveCategory(int userId, int categoryId);

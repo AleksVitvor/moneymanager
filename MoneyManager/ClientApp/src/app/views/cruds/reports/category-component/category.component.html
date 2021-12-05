@@ -1,0 +1,70 @@
+<form [formGroup]="itemForm" (ngSubmit)="submit()">
+  <div fxLayout="row wrap" fxLayout.lt-sm="column">
+    <div fxFlex="50" class="pr-16">
+      <mat-form-field class="full-width">
+        <input matInput
+               type="datetime-local"
+               name="startDate"
+               [formControl]="itemForm.controls['startDate']"
+               placeholder="Start Date">
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="50" class="pr-16">
+      <mat-form-field class="full-width">
+        <input matInput
+               type="datetime-local"
+               name="endDate"
+               [formControl]="itemForm.controls['endDate']"
+               placeholder="End Date">
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="50" class="pr-16">
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Categories</mat-label>
+        <mat-select [formControl]="categories" [(value)]="selectedCategories" multiple>
+          <mat-option *ngFor="let type of transactionCategories" [value]="type.value">
+            {{type.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="50" class="pr-16">
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Currency</mat-label>
+        <mat-select matInput
+                    [ngModel]
+                    formControlName="currencyId">
+          <mat-option *ngFor="let currency of currencies" [value]="currency.value">
+            {{currency.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="100" class="mt-16">
+      <button mat-raised-button color="primary" [disabled]="itemForm.invalid || selectedCategories.length == 0">{{"SEARCH" | translate }}</button>
+    </div>
+  </div>
+</form>
+<div fxFlex="100" fxFlex.gt-sm="100">
+  <mat-card class="p-0">
+    <mat-card-title class="">
+      <div class="card-title-text">{{title}}</div>
+      <mat-divider></mat-divider>
+    </mat-card-title>
+    <mat-card-content>
+      <canvas class="chart"
+              baseChart
+              [datasets]="radarChartData"
+              [labels]="radarChartLabels"
+              [legend]="false"
+              [colors]="chartColors"
+              [chartType]="radarChartType"
+              (chartHover)="radarChartHovered($event)"
+              (chartClick)="radarChartClicked($event)"></canvas>
+    </mat-card-content>
+  </mat-card>
+</div>

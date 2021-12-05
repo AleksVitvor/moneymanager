@@ -47,6 +47,8 @@
     <None Remove="ClientApp\src\app\views\charts\charts.service.ts" />
     <None Remove="ClientApp\src\app\views\cruds\crud-ngx-table\ngx-table-popup\transaction-category-popup\transaction-category-popup.component.ts" />
     <None Remove="ClientApp\src\app\views\cruds\report.service.ts" />
+    <None Remove="ClientApp\src\app\views\cruds\reports\category-component\category.component.ts" />
+    <None Remove="ClientApp\src\app\views\cruds\reports\expences-refills-component\expences-refill.component.ts" />
   </ItemGroup>
 
   <ItemGroup>

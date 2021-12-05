@@ -251,7 +251,8 @@ export class NavigationService {
       state: 'transaction/report',
       sub: [
         { name: 'General', state: '' },
-        { name: 'Expenses vs. Refill', state: 'expenses-vs-refill'}
+        { name: 'Expenses vs. Refill', state: 'expenses-vs-refill' },
+        { name: 'Category', state: 'category'}
       ]
     }
     //,

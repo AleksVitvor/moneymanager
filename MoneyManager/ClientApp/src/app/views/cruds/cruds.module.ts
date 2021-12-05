@@ -1,3 +1,4 @@
+import { GoogleChartsModule } from 'angular-google-charts';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -25,9 +26,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatSelectModule } from '@angular/material/select';
 import { TransactionCategoryComponent } from
   './crud-ngx-table/ngx-table-popup/transaction-category-popup/transaction-category-popup.component';
-import {ChartsComponent} from './reports/charts.component';
-import {ChartsModule} from 'ng2-charts';
-import { ReportService } from './report.service';
+import { ChartsComponent } from './reports/charts.component';
+import { ChartsModule } from 'ng2-charts';
+import { ReportService } from './reports/report.service';
+import { CategoryChartComponent } from './reports/category-component/category.component';
+import { ExpensesRefillChartComponent } from './reports/expences-refills-component/expences-refill.component';
 
 @NgModule({
   imports: [
@@ -44,6 +47,7 @@ import { ReportService } from './report.service';
     MatListModule,
     MatTooltipModule,
     MatDialogModule,
+    GoogleChartsModule,
     MatSnackBarModule,
     MatSlideToggleModule,
     TranslateModule,
@@ -53,7 +57,7 @@ import { ReportService } from './report.service';
     FormsModule,
     ChartsModule
   ],
-  declarations: [CrudNgxTableComponent, NgxTablePopupComponent, TransactionCategoryComponent, ChartsComponent],
+  declarations: [CrudNgxTableComponent, NgxTablePopupComponent, TransactionCategoryComponent, ChartsComponent, CategoryChartComponent, ExpensesRefillChartComponent],
   providers: [CrudService, ReportService],
   // entryComponents: [NgxTablePopupComponent]
 })

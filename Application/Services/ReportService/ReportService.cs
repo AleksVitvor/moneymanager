@@ -2,6 +2,7 @@
 {
     using Application.DTOs.ReportDTOs;
     using Application.Extensions;
+    using Application.Filters;
     using AutoMapper;
     using Microsoft.EntityFrameworkCore;
     using Persistence;
@@ -59,6 +60,51 @@
             }
         }
 
+        public async Task<List<AmountByMonthByCategoriesDTO>> GetCategoryReport(int userId, CategoryReportRequestFilter filter)
+        {
+            try
+            {
+                var result = new List<AmountByMonthByCategoriesDTO>();
+                var userTransactions = await context.Transactions
+                    .Include(x => x.TransactionCategory)
+                    .Where(x => x.UserId == userId && x.TransactionDate >= filter.StartDate && x.TransactionDate <= filter.EndDate && filter.CategoriesList.Contains(x.TransactionCategoryId))
+                    .ToListAsync();
+                var userTransactionsByMonth = userTransactions.GroupBy(x => new { x.TransactionDate.Year, x.TransactionDate.Month });
+                var userCategories = await context.TransactionCategories
+                     .Where(x => x.UserId == userId && x.Description != "Universal")
+                     .OrderBy(x => x.Description)
+                     .ToListAsync();
+
+                var currency = await context.Currencies.FirstOrDefaultAsync(x => x.CurrencyId == filter.CurrencyId);
+
+                foreach (var userMonthTransaction in userTransactionsByMonth)
+                {
+                    var monthValues = new List<float>();
+                    foreach (var category in userCategories)
+                    {
+                        var groupByCategories = userMonthTransaction
+                            .Where(x => x.TransactionCategoryId == category.TransactionCategoryId);
+
+                        monthValues.Add(groupByCategories.Sum(x => x.Amount.ConvertToCurrency(currency.CurrencyCode, x.TransactionDate, context)));
+                    }
+
+                    result.Add(new AmountByMonthByCategoriesDTO
+                    {
+                        Data = monthValues,
+                        Label = new DateTime(userMonthTransaction.Key.Year, userMonthTransaction.Key.Month, 1)
+                                .ToString("Y"),
+                        BorderWidth = 1
+                    });
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public async Task<List<AmountByMonthByCategoriesDTO>> GetExpensesVsRefill(int userId, DateTime startDate, DateTime endDate)
         {
             try
@@ -87,6 +133,60 @@
                     expenses.Add(userTransaction
                         .Where(x => x.TransactionDate.Month == startDate.AddMonths(i).Month && x.TransactionDate.Year == startDate.AddMonths(i).Year && x.TransactionTypeId == expensesId)
                         .Sum(x => x.Amount.ConvertToCurrency("EUR", x.TransactionDate, context)));
+                }
+
+                var result = new List<AmountByMonthByCategoriesDTO>();
+                result.Add(new AmountByMonthByCategoriesDTO
+                {
+                    Data = refills,
+                    Label = "Refill",
+                    BorderWidth = 1
+                });
+                result.Add(new AmountByMonthByCategoriesDTO
+                {
+                    Data = expenses,
+                    Label = "Expenses",
+                    BorderWidth = 1
+                });
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<AmountByMonthByCategoriesDTO>> GetExpensesVsRefill(int userId, DateTime startDate, DateTime endDate, int currencyId)
+        {
+            try
+            {
+                var userTransaction = await context.Transactions
+                       .Where(x => x.UserId == userId && x.TransactionDate >= startDate && x.TransactionDate <= endDate)
+                       .ToListAsync();
+
+                var refillId = (await context.TransactionTypes
+                    .FirstOrDefaultAsync(x => x.Description == "Refill")).TransactionTypeId;
+
+                var expensesId = (await context.TransactionTypes
+                    .FirstOrDefaultAsync(x => x.Description == "Expenses")).TransactionTypeId;
+
+                var monthPeriod = MonthDifference(startDate, endDate);
+
+                var refills = new List<float>();
+                var expenses = new List<float>();
+
+                var currency = await context.Currencies.FirstOrDefaultAsync(x => x.CurrencyId == currencyId);
+
+                for (int i = 0; i < monthPeriod; i++)
+                {
+                    refills.Add(userTransaction
+                        .Where(x => x.TransactionDate.Month == startDate.AddMonths(i).Month && x.TransactionDate.Year == startDate.AddMonths(i).Year && x.TransactionTypeId == refillId)
+                        .Sum(x => x.Amount.ConvertToCurrency(currency.CurrencyCode, x.TransactionDate, context)));
+
+                    expenses.Add(userTransaction
+                        .Where(x => x.TransactionDate.Month == startDate.AddMonths(i).Month && x.TransactionDate.Year == startDate.AddMonths(i).Year && x.TransactionTypeId == expensesId)
+                        .Sum(x => x.Amount.ConvertToCurrency(currency.CurrencyCode, x.TransactionDate, context)));
                 }
 
                 var result = new List<AmountByMonthByCategoriesDTO>();
