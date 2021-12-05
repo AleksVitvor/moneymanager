@@ -1,5 +1,6 @@
 ﻿namespace MoneyManager.Controllers
 {
+    using Application.Filters;
     using Application.Services.ReportService;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,22 @@
             try
             {
                 return Ok(reportService.GetMonthFromPeriod(DateTime.Now.AddYears(-1), DateTime.Now));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    Message = "Error occurred while search for moth period"
+                });
+            }
+        }
+
+        [HttpPost]
+        public IActionResult GetMonthPeriodByFilter(CategoryReportRequestFilter filter)
+        {
+            try
+            {
+                return Ok(reportService.GetMonthFromPeriod(filter.StartDate, filter.EndDate));
             }
             catch (Exception ex)
             {

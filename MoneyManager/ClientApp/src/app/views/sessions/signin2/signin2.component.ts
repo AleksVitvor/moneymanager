@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { AppLoaderService } from '../../../shared/services/app-loader/app-loader.service';
 import { JwtAuthService } from '../../../shared/services/auth/jwt-auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-signin2',
@@ -24,6 +25,7 @@ export class Signin2Component implements OnInit, AfterViewInit, OnDestroy {
     private jwtAuth: JwtAuthService,
     private egretLoader: AppLoaderService,
     private router: Router,
+    private snack: MatSnackBar,
     private route: ActivatedRoute
   ) {
     this._unsubscribeAll = new Subject();
@@ -57,6 +59,7 @@ export class Signin2Component implements OnInit, AfterViewInit, OnDestroy {
       }, err => {
         this.submitButton.disabled = false;
         this.errorMsg = err.message;
+        this.snack.open(err.message, 'Error', { duration: 4000 })
       })
   }
 

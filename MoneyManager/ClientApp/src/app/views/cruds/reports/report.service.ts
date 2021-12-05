@@ -18,6 +18,23 @@ export class ReportService {
     return this.http.get(`/api/month`);
   }
 
+  getMonthByStartAndEnd(startDate, endDate): Observable<any> {
+    return this.http.post('/api/month',
+      {
+        startDate: startDate,
+        endDate: endDate
+      });
+  }
+
+  getExpensesVsRefillReport(currencyId, startDate, endDate): Observable<any> {
+    return this.http.post('/api/expensesrefill',
+      {
+        currencyId: currencyId,
+        startDate: startDate,
+        endDate: endDate
+      });
+  }
+
   getExpensesVsRefill(): Observable<any> {
     return this.http.get(`/api/expensesrefill`);
   }

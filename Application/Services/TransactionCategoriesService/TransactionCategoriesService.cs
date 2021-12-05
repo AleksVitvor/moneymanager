@@ -85,5 +85,21 @@
                 throw;
             }
         }
+
+        public async Task<List<TransactionCategoryDTO>> GetTransactionCategories(int userId, List<int> categories)
+        {
+            try
+            {
+                var transactions = await context.TransactionCategories
+                    .Where(x => x.UserId == userId && x.Description != "Universal" && categories.Contains(x.TransactionCategoryId))
+                    .OrderBy(x => x.Description)
+                    .ToListAsync();
+                return mapper.Map<List<TransactionCategory>, List<TransactionCategoryDTO>>(transactions);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }

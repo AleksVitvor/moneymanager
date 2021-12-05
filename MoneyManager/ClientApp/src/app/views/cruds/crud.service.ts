@@ -28,6 +28,13 @@ export class CrudService {
     return this.http.get(`/api/transactioncategories`);
   }
 
+  getSelectedCategories(itemList): Observable<any> {
+    return this.http.post('/api/usercategory',
+      {
+        CategoriesList: itemList
+      });
+  } 
+
   addCategory(item): Observable<any> {
     return this.http.post('/api/transactioncategories',
       {
