@@ -52,7 +52,7 @@
 
                 if (id > 0)
                 {
-                    return Ok(await reportService.GetExpensesVsRefill(id, filter.StartDate, filter.EndDate));
+                    return Ok(await reportService.GetExpensesVsRefill(id, filter.StartDate, filter.EndDate, filter.CurrencyId));
                 }
 
                 return BadRequest(new
