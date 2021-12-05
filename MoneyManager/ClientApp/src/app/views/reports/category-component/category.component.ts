@@ -1,30 +1,35 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { CrudService } from '../crud.service';
-import { ReportService } from './report.service';
+import { HttpClient } from "@angular/common/http";
+import { CurrencyModel } from 'app/shared/models/CurrencyModel';
+import { TransactionCategoryModel } from 'app/shared/models/transactioncategory.model';
+import { CrudService } from 'app/views/cruds/crud.service';
+import { ReportService } from '../report.service';
 
 @Component({
   selector: 'app-charts',
-  templateUrl: './charts.component.html'
+  templateUrl: './category.component.html'
 })
-export class ChartsComponent implements OnInit, OnDestroy{
+export class CategoryChartComponent implements OnInit, OnDestroy {
+  categories = new FormControl();
   public getCategoriesSub: Subscription;
   public getCategoriesValuesSub: Subscription;
   public getExpensesRefillsSub: Subscription;
   public getExpensesRefillsDatesSub: Subscription;
+  public itemForm: FormGroup;
+  transactionCategories: TransactionCategoryModel[];
+  currencies: CurrencyModel[];
+  selectedCategories = [];
   constructor(
     private reportService: ReportService,
-    private crudService: CrudService
+    private crudService: CrudService,
+    private fb: FormBuilder,
+    private http: HttpClient
   ) { }
-  sharedChartOptions: any = {
-    responsive: true,
-    // maintainAspectRatio: false,
-    legend: {
-      display: false,
-      position: 'bottom'
-    }
-  };
-  chartColors: any[] = [{
+  title = 'Category report (EUR)';
+
+chartColors: any[] = [{
     backgroundColor: '#3f51b5',
     borderColor: '#3f51b5',
     pointBackgroundColor: '#3f51b5',
@@ -47,46 +52,6 @@ export class ChartsComponent implements OnInit, OnDestroy{
     pointHoverBorderColor: 'rgba(148,159,177,0.8)'
   }];
 
-  /*
-  * Line Chart Options
-  */
-  lineChartData: any[] = [{
-    data: [5, 5, 7, 8, 4, 5, 5],
-    label: 'Series A',
-    borderWidth: 1
-  }, {
-    data: [5, 4, 4, 3, 6, 2, 5],
-    label: 'Series B',
-    borderWidth: 1
-  }];
-  lineChartLabels: any[] = ['1', '2', '3', '4', '5', '6', '7', '8'];
-  lineChartOptions: any = Object.assign({
-    animation: false,
-    scales: {
-      xAxes: [{
-        gridLines: {
-          color: 'rgba(0,0,0,0.02)',
-          zeroLineColor: 'rgba(0,0,0,0.02)'
-        }
-      }],
-      yAxes: [{
-        gridLines: {
-          color: 'rgba(0,0,0,0.02)',
-          zeroLineColor: 'rgba(0,0,0,0.02)'
-        },
-        ticks: {
-          beginAtZero: true,
-          suggestedMax: 9,
-        }
-      }]
-    }
-  }, this.sharedChartOptions);
-  public lineChartLegend = false;
-  public lineChartType = 'line';
-
-  /*
-  * Radar Chart Options
-  */
   public radarChartLabels: string[] = ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'];
 
   public radarChartData: any = [
@@ -113,45 +78,60 @@ export class ChartsComponent implements OnInit, OnDestroy{
     }
   ];
 
+  public radarChartClicked(e: any): void {
+  }
+  public radarChartHovered(e: any): void {
+  }
+
   ngOnInit() {
     this.getCategories();
-    this.getMonth();
     this.getValuesByCategories();
-    this.getExpensesRefill();
+    this.getCurrencies();
+    this.buildItemForm();
   }
   ngOnDestroy() {
-    if (this.getCategoriesSub) {
-      this.getCategoriesSub.unsubscribe();
-    }
-    if (this.getCategoriesValuesSub) {
-      this.getCategoriesValuesSub.unsubscribe();
-    }
-    if (this.getExpensesRefillsDatesSub) {
-      this.getExpensesRefillsDatesSub.unsubscribe();
-    }
-    if (this.getExpensesRefillsSub) {
-      this.getExpensesRefillsSub.unsubscribe();
-    }
+    
+  }
+
+  submit() {
+    if (!this.itemForm.invalid) {
+      let currencyCode = this.currencies.filter(x=>x.value === this.itemForm.value.currencyId)[0].viewValue;
+      this.title = 'Category report (' + currencyCode + ')';
+
+      this.crudService.getSelectedCategories(this.selectedCategories)
+      .subscribe(data => {
+        this.radarChartLabels = data.map(function (item) { return item.viewValue });
+      });
+
+      return this.http.post('/api/categoryreport',
+        {
+          CurrencyId: this.itemForm.value.currencyId,
+          StartDate: this.itemForm.value.startDate,
+          EndDate: this.itemForm.value.endDate,
+          CategoriesList: this.selectedCategories
+        })
+        .subscribe(data => {
+          this.radarChartData = data;
+        }, err => {
+        })
+    };
+  }
+
+  buildItemForm() {
+    this.itemForm = this.fb.group({
+      startDate: ['', Validators.required],
+      transactionCategoryId: [''],
+      endDate: ['', Validators.required],
+      currencyId: ['', Validators.required]
+    });
   }
 
   getCategories() {
     this.crudService.getCategories()
       .subscribe(data => {
+        this.transactionCategories = data;
+        this.itemForm.controls['transactionCategoryId'].setValue('');
         this.radarChartLabels = data.map(function (item) { return item.viewValue });
-      });
-  }
-
-  getMonth() {
-    this.reportService.getMonth()
-      .subscribe(data => {
-        this.lineChartLabels = data;
-      });
-  }
-
-  getExpensesRefill() {
-    this.reportService.getExpensesVsRefill()
-      .subscribe(data => {
-        this.lineChartData = data;
       });
   }
 
@@ -161,21 +141,12 @@ export class ChartsComponent implements OnInit, OnDestroy{
         this.radarChartData = data;
       });
   }
-
-  /*
-  * Line Chart Event Handler
-  */
-  public lineChartClicked(e: any): void {
+  
+  getCurrencies() {
+    this.crudService.getCurrencies()
+      .subscribe(data => {
+        this.currencies = data;
+        this.itemForm.controls['currencyId'].setValue('');
+      });
   }
-  public lineChartHovered(e: any): void {
-  }
-
-  /*
-  * Rader Chart Event Handler
-  */
-  public radarChartClicked(e: any): void {
-  }
-  public radarChartHovered(e: any): void {
-  }
-
 }

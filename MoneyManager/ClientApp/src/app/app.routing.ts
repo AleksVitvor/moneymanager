@@ -27,6 +27,10 @@ export const rootRouterConfig: Routes = [
       {
         path: 'transaction',
         loadChildren: () => import('app/views/cruds/cruds.module').then(m => m.CrudsModule)
+      },
+      {
+        path: 'report',
+        loadChildren: () => import('app/views/reports/reports.module').then(m => m.ReportsModule)
       }
     ]
   },

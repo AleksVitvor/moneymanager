@@ -1,9 +1,5 @@
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { TransactionTypeModel } from "../../../../../shared/models/transactiontype.model";
-import { TransactionCategoryModel } from "../../../../../shared/models/transactioncategory.model";
-import { CrudService } from "../../../crud.service";
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 @Component({

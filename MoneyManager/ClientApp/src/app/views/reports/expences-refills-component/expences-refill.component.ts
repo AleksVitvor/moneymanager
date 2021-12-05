@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { CurrencyModel } from '../../../../shared/models/CurrencyModel';
-import { TransactionCategoryModel } from '../../../../shared/models/transactioncategory.model';
-import { CrudService } from '../../crud.service';
-import { ReportService } from '../report.service';
 import { HttpClient } from "@angular/common/http";
+import { CurrencyModel } from 'app/shared/models/CurrencyModel';
+import { CrudService } from 'app/views/cruds/crud.service';
+import { ReportService } from '../report.service';
 
 @Component({
   selector: 'app-charts',

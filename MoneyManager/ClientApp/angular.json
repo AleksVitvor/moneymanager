@@ -7,7 +7,7 @@
   "newProjectRoot": "projects",
   "projects": {
     "egret": {
-      "root": "",
+      "root": "e2e",
       "sourceRoot": "src",
       "projectType": "application",
       "architect": {
