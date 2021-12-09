@@ -7,6 +7,7 @@ import { catchError, first, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { JwtAuthService } from '../../../shared/services/auth/jwt-auth.service';
 import { throwError } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: "app-signup2",
@@ -16,11 +17,13 @@ import { throwError } from 'rxjs';
 export class Signup2Component implements OnInit {
   signupForm: FormGroup;
   loading: boolean;
+  errorMsg = '';
 
   constructor(
     private fb: FormBuilder,
     jwtAuth: JwtAuthService,
     private http: HttpClient,
+    private snack: MatSnackBar,
     private router: Router) {
     if (jwtAuth.isLoggedIn()) {
       this.router.navigate(['/']);
@@ -58,6 +61,8 @@ export class Signup2Component implements OnInit {
           this.router.navigateByUrl('/sessions/signin');
         }, err => {
           this.loading = false;
+          this.errorMsg = err.error;
+          this.snack.open(this.errorMsg, 'Ok', { duration: 4000 })
         })
     };
   }

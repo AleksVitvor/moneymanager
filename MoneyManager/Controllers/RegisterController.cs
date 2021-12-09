@@ -1,4 +1,6 @@
-﻿namespace MoneyManager.Controllers
+﻿using Application.Exceptions;
+
+namespace MoneyManager.Controllers
 {
     using Application.DTOs.UserDTOs;
     using Application.Services.LoginService;
@@ -21,10 +23,14 @@
             try
             {
                 await userService.RegisterUser(registrationModel);
-                return Ok(new 
-                { 
+                return Ok(new
+                {
                     Message = "Registration finished successfully"
                 });
+            }
+            catch (UserValidationException ex)
+            {
+                return StatusCode(500, ex.Message);
             }
             catch (Exception ex)
             {

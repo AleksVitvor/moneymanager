@@ -1,4 +1,7 @@
-﻿namespace Application.Services.LoginService
+﻿using System.Linq;
+using Application.Exceptions;
+
+namespace Application.Services.LoginService
 {
     using DTOs.UserDTOs;
     using AutoMapper;
@@ -54,6 +57,10 @@
             {
                 var user = mapper.Map<User>(registrationModel);
                 user.TransactionCategories = DefaultTransactionCategories.TransactionCategories;
+                if (context.Users.Any(x => x.Email == user.Email))
+                {
+                    throw new UserValidationException("User with the same email already exists");
+                }
                 await context.Users.AddAsync(user);
                 await context.SaveChangesAsync();
             }
