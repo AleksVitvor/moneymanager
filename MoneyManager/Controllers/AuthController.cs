@@ -34,7 +34,7 @@
 
                 if (user == null)
                 {
-                    return BadRequest(new { errorText = "Invalid username or password." });
+                    return StatusCode(500, "Invalid username or password.");
                 }
 
                 var encodedJwt = GetJwtToken(user, identity);
@@ -70,10 +70,7 @@
                     return Ok(await userService.GetUserById(id));
                 }
 
-                return BadRequest(new
-                {
-                    Message = "User can't be found"
-                });
+                return StatusCode(401, "User can't be found");
             }
             catch (Exception ex)
             {

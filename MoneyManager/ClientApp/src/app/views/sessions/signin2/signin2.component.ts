@@ -58,8 +58,8 @@ export class Signin2Component implements OnInit, AfterViewInit, OnDestroy {
         this.router.navigateByUrl(this.jwtAuth.return);
       }, err => {
         this.submitButton.disabled = false;
-        this.errorMsg = err.message;
-        this.snack.open(err.message, 'Error', { duration: 4000 })
+        this.errorMsg = err.error;
+        this.snack.open(this.errorMsg, 'Error', { duration: 4000 })
       })
   }
 

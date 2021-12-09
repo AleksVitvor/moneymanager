@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { LocalStoreService } from "../local-store.service";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Router, ActivatedRoute } from "@angular/router";
 import { map, catchError, delay } from "rxjs/operators";
 import { User } from "../../models/user.model";
@@ -46,14 +46,13 @@ export class JwtAuthService {
   }
 
   public checkTokenIsValid() {
-
     return this.http.get(`/api/auth`)
       .pipe(
         map((profile: User) => {
           this.setUserAndToken(this.getJwtToken(), profile, true);
           return profile;
         }),
-        catchError((error) => {
+        catchError((error: HttpErrorResponse) => {
           this.signout();
           return of(error);
         })
