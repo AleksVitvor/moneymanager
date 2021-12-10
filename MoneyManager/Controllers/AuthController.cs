@@ -74,10 +74,7 @@
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new
-                {
-                    Message = "Authentication failed"
-                });
+                return StatusCode(500, "Authentication failed");
             }
         }
 

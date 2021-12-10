@@ -36,10 +36,7 @@
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new
-                {
-                    Message = "Error occurred while search for transactions"
-                });
+                return StatusCode(500, "Error occurred while search for transactions");
             }
         }
 

@@ -40,7 +40,7 @@ export class CrudNgxTableComponent implements OnInit, OnDestroy {
           this.items = data;
         },
         error => {
-          this.snack.open(error.error.message, 'OK', { duration: 4000 })
+          this.snack.open(error.error, 'OK', { duration: 4000 })
         });
   }
 
