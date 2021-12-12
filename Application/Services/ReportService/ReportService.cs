@@ -1,8 +1,8 @@
 ﻿namespace Application.Services.ReportService
 {
-    using Application.DTOs.ReportDTOs;
-    using Application.Extensions;
-    using Application.Filters;
+    using DTOs.ReportDTOs;
+    using Extensions;
+    using Filters;
     using AutoMapper;
     using Microsoft.EntityFrameworkCore;
     using Persistence;
@@ -23,6 +23,7 @@
             {
                 var result = new List<AmountByMonthByCategoriesDTO>();
                 var userTransactions = await context.Transactions
+                    .Include(x => x.Currency)
                     .Where(x => x.UserId == userId && x.TransactionDate >= startDate && x.TransactionDate <= endDate)
                     .Include(x => x.TransactionCategory)
                     .ToListAsync();
@@ -40,7 +41,7 @@
                         var groupByCategories = userMonthTransaction
                             .Where(x => x.TransactionCategoryId == category.TransactionCategoryId);
 
-                        monthValues.Add(groupByCategories.Sum(x => x.Amount.ConvertToCurrency("EUR", x.TransactionDate, context)));
+                        monthValues.Add(groupByCategories.Sum(x => x.Amount.ConvertToCurrency("EUR", x.Currency.CurrencyCode, x.TransactionDate, context)));
                     }
 
                     result.Add(new AmountByMonthByCategoriesDTO
@@ -66,12 +67,13 @@
             {
                 var result = new List<AmountByMonthByCategoriesDTO>();
                 var userTransactions = await context.Transactions
+                    .Include(x => x.Currency)
                     .Include(x => x.TransactionCategory)
                     .Where(x => x.UserId == userId && x.TransactionDate >= filter.StartDate && x.TransactionDate <= filter.EndDate && filter.CategoriesList.Contains(x.TransactionCategoryId))
                     .ToListAsync();
                 var userTransactionsByMonth = userTransactions.GroupBy(x => new { x.TransactionDate.Year, x.TransactionDate.Month });
                 var userCategories = await context.TransactionCategories
-                     .Where(x => x.UserId == userId && x.Description != "Universal")
+                     .Where(x => x.UserId == userId && x.Description != "Universal" && filter.CategoriesList.Contains(x.TransactionCategoryId))
                      .OrderBy(x => x.Description)
                      .ToListAsync();
 
@@ -85,7 +87,7 @@
                         var groupByCategories = userMonthTransaction
                             .Where(x => x.TransactionCategoryId == category.TransactionCategoryId);
 
-                        monthValues.Add(groupByCategories.Sum(x => x.Amount.ConvertToCurrency(currency.CurrencyCode, x.TransactionDate, context)));
+                        monthValues.Add(groupByCategories.Sum(x => x.Amount.ConvertToCurrency(currency.CurrencyCode, x.Currency.CurrencyCode, x.TransactionDate, context)));
                     }
 
                     result.Add(new AmountByMonthByCategoriesDTO
@@ -110,6 +112,7 @@
             try
             {
                 var userTransaction = await context.Transactions
+                    .Include(x => x.Currency)
                     .Where(x => x.UserId == userId && x.TransactionDate >= startDate && x.TransactionDate <= endDate)
                     .ToListAsync();
 
@@ -128,11 +131,11 @@
                 {
                     refills.Add(userTransaction
                         .Where(x => x.TransactionDate.Month == startDate.AddMonths(i).Month && x.TransactionDate.Year == startDate.AddMonths(i).Year && x.TransactionTypeId == refillId)
-                        .Sum(x => x.Amount.ConvertToCurrency("EUR", x.TransactionDate, context)));
+                        .Sum(x => x.Amount.ConvertToCurrency("EUR", x.Currency.CurrencyCode, x.TransactionDate, context)));
 
                     expenses.Add(userTransaction
                         .Where(x => x.TransactionDate.Month == startDate.AddMonths(i).Month && x.TransactionDate.Year == startDate.AddMonths(i).Year && x.TransactionTypeId == expensesId)
-                        .Sum(x => x.Amount.ConvertToCurrency("EUR", x.TransactionDate, context)));
+                        .Sum(x => x.Amount.ConvertToCurrency("EUR", x.Currency.CurrencyCode, x.TransactionDate, context)));
                 }
 
                 var result = new List<AmountByMonthByCategoriesDTO>();
@@ -162,8 +165,9 @@
             try
             {
                 var userTransaction = await context.Transactions
-                       .Where(x => x.UserId == userId && x.TransactionDate >= startDate && x.TransactionDate <= endDate)
-                       .ToListAsync();
+                    .Include(x => x.Currency)
+                    .Where(x => x.UserId == userId && x.TransactionDate >= startDate && x.TransactionDate <= endDate)
+                    .ToListAsync();
 
                 var refillId = (await context.TransactionTypes
                     .FirstOrDefaultAsync(x => x.Description == "Refill")).TransactionTypeId;
@@ -182,11 +186,11 @@
                 {
                     refills.Add(userTransaction
                         .Where(x => x.TransactionDate.Month == startDate.AddMonths(i).Month && x.TransactionDate.Year == startDate.AddMonths(i).Year && x.TransactionTypeId == refillId)
-                        .Sum(x => x.Amount.ConvertToCurrency(currency.CurrencyCode, x.TransactionDate, context)));
+                        .Sum(x => x.Amount.ConvertToCurrency(currency.CurrencyCode, x.Currency.CurrencyCode, x.TransactionDate, context)));
 
                     expenses.Add(userTransaction
                         .Where(x => x.TransactionDate.Month == startDate.AddMonths(i).Month && x.TransactionDate.Year == startDate.AddMonths(i).Year && x.TransactionTypeId == expensesId)
-                        .Sum(x => x.Amount.ConvertToCurrency(currency.CurrencyCode, x.TransactionDate, context)));
+                        .Sum(x => x.Amount.ConvertToCurrency(currency.CurrencyCode, x.Currency.CurrencyCode, x.TransactionDate, context)));
                 }
 
                 var result = new List<AmountByMonthByCategoriesDTO>();
