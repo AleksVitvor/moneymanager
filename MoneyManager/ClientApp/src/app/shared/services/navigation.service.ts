@@ -248,7 +248,7 @@ export class NavigationService {
       type: 'dropDown',
       tooltip: 'Reports',
       icon: 'show_chart',
-      state: 'transaction/report',
+      state: 'report',
       sub: [
         { name: 'General', state: '' },
         { name: 'Expenses vs. Refill', state: 'expenses-vs-refill' },
