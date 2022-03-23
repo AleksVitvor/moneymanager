@@ -5,7 +5,7 @@ import { ExpensesRefillChartComponent } from "./expences-refills-component/expen
 
 export const ReportsRoutes: Routes = [
     {
-        path: 'report',
+        path: '',
         component: ChartsComponent,
         data: { title: 'Report' }
     },
