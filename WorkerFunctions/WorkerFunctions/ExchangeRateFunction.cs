@@ -1,4 +1,4 @@
-namespace WorkerFunctions
+﻿namespace WorkerFunctions
 {
     using Domain;
     using ExchangeRateLibrary.Service;
@@ -48,7 +48,8 @@ namespace WorkerFunctions
                     {
                         var newCurrency = new Currency
                         {
-                            CurrencyCode = "RUB"
+                            CurrencyCode = "RUB",
+                            CurrencySymbol = "₽"
                         };
                         addedCurrencies.Add(newCurrency);
                         newRates.Add(new ExchangeRates
@@ -72,7 +73,8 @@ namespace WorkerFunctions
                     {
                         var newCurrency = new Currency
                         {
-                            CurrencyCode = "BYN"
+                            CurrencyCode = "BYN",
+                            CurrencySymbol = "Br"
                         };
                         addedCurrencies.Add(newCurrency);
                         newRates.Add(new ExchangeRates
@@ -96,7 +98,8 @@ namespace WorkerFunctions
                     {
                         var newCurrency = new Currency
                         {
-                            CurrencyCode = "EUR"
+                            CurrencyCode = "EUR",
+                            CurrencySymbol = "€"
                         };
                         addedCurrencies.Add(newCurrency);
                         newRates.Add(new ExchangeRates
@@ -120,7 +123,8 @@ namespace WorkerFunctions
                     {
                         var newCurrency = new Currency
                         {
-                            CurrencyCode = "USD"
+                            CurrencyCode = "USD",
+                            CurrencySymbol = "$"
                         };
                         addedCurrencies.Add(newCurrency);
                         newRates.Add(new ExchangeRates
@@ -144,7 +148,8 @@ namespace WorkerFunctions
                     {
                         var newCurrency = new Currency
                         {
-                            CurrencyCode = "GBP"
+                            CurrencyCode = "GBP",
+                            CurrencySymbol = "£"
                         };
                         addedCurrencies.Add(newCurrency);
                         newRates.Add(new ExchangeRates
@@ -168,7 +173,8 @@ namespace WorkerFunctions
                     {
                         var newCurrency = new Currency
                         {
-                            CurrencyCode = "CHF"
+                            CurrencyCode = "CHF",
+                            CurrencySymbol = "¥"
                         };
                         addedCurrencies.Add(newCurrency);
                         newRates.Add(new ExchangeRates

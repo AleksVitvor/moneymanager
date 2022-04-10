@@ -16,6 +16,26 @@
 
             return configuration["MoneyManager:ConnectionStrings:MoneyManagerDB"];
         }
+
+        public static string GetBillRecognizerEndpoint(this IConfiguration configuration, IWebHostEnvironment env)
+        {
+            if (env.IsProduction())
+            {
+                return Environment.GetEnvironmentVariable("BILL_RECOGNIZER_ENDPOINT", EnvironmentVariableTarget.Process);
+            }
+
+            return configuration["MoneyManager:ConnectionStrings:BillRecognizerEndpoint"];
+        }
+
+        public static string GetBillRecognizerApiKey(this IConfiguration configuration, IWebHostEnvironment env)
+        {
+            if (env.IsProduction())
+            {
+                return Environment.GetEnvironmentVariable("BILL_RECOGNIZER_APIKEY", EnvironmentVariableTarget.Process);
+            }
+
+            return configuration["MoneyManager:ConnectionStrings:BillRecognizerApiKey"];
+        }
     }
 
 }

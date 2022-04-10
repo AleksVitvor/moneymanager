@@ -37,6 +37,6 @@
 
         public virtual List<Transaction> Transactions { get; set; } = new List<Transaction>();
 
-        public virtual List<TransactionCategory> TransactionCategories { get; set; } = new List<TransactionCategory>();
+        public virtual List<TransactionCategory> TransactionCategories { get; set; } = new List<TransactionCategory>(); 
     }
 }

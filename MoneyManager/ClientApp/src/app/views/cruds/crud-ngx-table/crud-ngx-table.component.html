@@ -1,6 +1,7 @@
 <div class="m-333">
   <!-- <span fxFlex></span> -->
-  <button mat-raised-button class="mb-8" color="primary" (click)="openPopUp({}, true)">{{"ADD" | translate }} {{"Transaction" | translate }}</button>
+  <button mat-raised-button class="mb-8" style="margin-right: 20px" color="primary" (click)="openPopUp({}, true)">{{"ADD" | translate }} {{"Transaction" | translate }}</button>
+  <button mat-raised-button class="mb-8" color="primary" (click)="openPopUpWithPhoto()">{{"ADD" | translate }} {{"Transaction" | translate }} {{"With" | translate}} {{"Photo" | translate}}</button>
 </div>
 <mat-card class="p-0" [@animate]="{value:'*',params:{y:'50px',delay:'300ms'}}">
   <mat-card-content class="p-0">

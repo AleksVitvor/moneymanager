@@ -15,6 +15,10 @@
         [Required]
         public string CurrencyCode { get; set; }
 
+        [Column("CurrencySymbol")]
+        [Required]
+        public string CurrencySymbol { get; set; }
+
         public virtual List<Transaction> Transactions { get; set; } = new List<Transaction>();
 
         public virtual List<ExchangeRates> ExchangeRates { get; set; } = new List<ExchangeRates>();

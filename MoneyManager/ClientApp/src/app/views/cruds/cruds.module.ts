@@ -27,6 +27,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { TransactionCategoryComponent } from
   './crud-ngx-table/ngx-table-popup/transaction-category-popup/transaction-category-popup.component';
 import { ChartsModule } from 'ng2-charts';
+import { UploadComponent } from './crud-ngx-table/upload/upload.component';
 
 @NgModule({
   imports: [
@@ -53,7 +54,7 @@ import { ChartsModule } from 'ng2-charts';
     FormsModule,
     ChartsModule
   ],
-  declarations: [CrudNgxTableComponent, NgxTablePopupComponent, TransactionCategoryComponent],
+  declarations: [CrudNgxTableComponent, NgxTablePopupComponent, TransactionCategoryComponent, UploadComponent],
   providers: [CrudService],
   // entryComponents: [NgxTablePopupComponent]
 })
