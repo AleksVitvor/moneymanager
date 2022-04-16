@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(MoneyManagerContext))]
-    partial class MoneyManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20220416151124_AddCurrencyCode")]
+    partial class AddCurrencyCode
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,6 +69,34 @@ namespace Persistence.Migrations
                     b.HasIndex("CurrencyId");
 
                     b.ToTable("ExchangeRates");
+                });
+
+            modelBuilder.Entity("Domain.PhotoTransaction", b =>
+                {
+                    b.Property<int>("PhotoTransactionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsProcessed")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsProcessed");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Path");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnName("UserId");
+
+                    b.HasKey("PhotoTransactionId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PhotoTransaction");
                 });
 
             modelBuilder.Entity("Domain.Role", b =>
@@ -240,6 +270,17 @@ namespace Persistence.Migrations
                     b.Navigation("Currency");
                 });
 
+            modelBuilder.Entity("Domain.PhotoTransaction", b =>
+                {
+                    b.HasOne("Domain.User", "User")
+                        .WithMany("PhotoTransactions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Domain.Transaction", b =>
                 {
                     b.HasOne("Domain.Transaction", "ChildTransaction")
@@ -328,6 +369,8 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.User", b =>
                 {
+                    b.Navigation("PhotoTransactions");
+
                     b.Navigation("TransactionCategories");
 
                     b.Navigation("Transactions");

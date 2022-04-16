@@ -51,12 +51,14 @@
             {
                 currencies.Add(new Currency
                 {
-                    CurrencyCode = "EUR"
+                    CurrencyCode = "EUR",
+                    CurrencySymbol = "€"
                 });
 
                 currencies.Add(new Currency
                 {
-                    CurrencyCode = "USD"
+                    CurrencyCode = "USD",
+                    CurrencySymbol = "$"
                 });
 
                 context.Currencies.AddRange(currencies);

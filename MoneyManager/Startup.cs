@@ -1,4 +1,5 @@
 using Application.Profiles;
+using Application.Services;
 using Application.Services.CurrencyService;
 using Application.Services.LoginService;
 using Application.Services.MappingService;
@@ -9,6 +10,7 @@ using Infrastructure.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
@@ -60,6 +62,11 @@ namespace MoneyManager
                         };
                     });
             services.AddControllers();
+            services.Configure<FormOptions>(o => {
+                o.ValueLengthLimit = int.MaxValue;
+                o.MultipartBodyLengthLimit = int.MaxValue;
+                o.MemoryBufferThreshold = int.MaxValue;
+            });
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
@@ -68,6 +75,10 @@ namespace MoneyManager
             services.Configure<RouteOptions>(options => { options.LowercaseUrls = true; });
             services.AddDbContext<MoneyManagerContext>(opts =>
                 opts.UseSqlServer(Configuration.GetDbConnectionString(Environment)));
+
+            var apiKey = Configuration.GetBillRecognizerApiKey(Environment);
+            var URL = Configuration.GetBillRecognizerEndpoint(Environment);
+            BlobConnectionStringContainer.Create(apiKey, URL);
 
             services.AddAutoMapper(typeof(UserProfile), typeof(TransactionProfile));
             services.AddTransient<IUserService, UserService>();

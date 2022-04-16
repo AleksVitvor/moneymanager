@@ -8,6 +8,7 @@ import { NgxTablePopupComponent } from './ngx-table-popup/ngx-table-popup.compon
 import { Subscription } from 'rxjs';
 import { egretAnimations } from "../../../shared/animations/egret-animations";
 import { DisplayTransactionModel } from '../../../shared/models/display.transaction.model';
+import { UploadComponent } from './upload/upload.component';
 
 @Component({
   selector: 'app-crud-ngx-table',
@@ -42,6 +43,22 @@ export class CrudNgxTableComponent implements OnInit, OnDestroy {
         error => {
           this.snack.open(error.error, 'OK', { duration: 4000 })
         });
+  }
+
+  openPopUpWithPhoto() {
+    const title = 'Add new transaction via photo';
+    const dialogRef: MatDialogRef<any> = this.dialog.open(UploadComponent, {
+      width: '720px',
+      disableClose: true,
+      data: { title }
+    });
+    dialogRef.afterClosed()
+      .subscribe(res => {
+        if (!res) {
+          this.getItems();
+          return;
+        }
+      });
   }
 
   openPopUp(data: any = {}, isNew?) {
