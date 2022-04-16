@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.TransactionDTOs;
+using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,6 +14,6 @@ namespace Application.Services.TransactionService
         Task<List<TransactionDTO>> UpdateTransaction(IncommingTransactionDTO transactionDTO);
 
         Task<List<TransactionDTO>> DeleteTransaction(int id, int userId);
-        Task AddPhotoTransaction(int userId, string path);
+        Task AddPhotoTransaction(IFormFile formFile, int userId);
     }
 }

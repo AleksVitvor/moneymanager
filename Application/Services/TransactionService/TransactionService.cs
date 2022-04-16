@@ -5,6 +5,7 @@
     using Azure;
     using Azure.AI.FormRecognizer.DocumentAnalysis;
     using Domain;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
     using Persistence;
     using System;
@@ -96,7 +97,7 @@
             }
         }
 
-        public async Task AddPhotoTransaction(int userId, string path)
+        public async Task AddPhotoTransaction(IFormFile formFile, int userId)
         {
             try
             {
@@ -108,9 +109,9 @@
                 var credential = new AzureKeyCredential(apiKey);
                 var client = new DocumentAnalysisClient(new Uri(endPoint), credential);
 
-                await using var memoryStream = new MemoryStream(File.ReadAllBytes(path));
+                await using var readStream = formFile.OpenReadStream();
 
-                var operation = await client.StartAnalyzeDocumentAsync("prebuilt-receipt", memoryStream);
+                var operation = await client.StartAnalyzeDocumentAsync("prebuilt-receipt", readStream);
 
                 await operation.WaitForCompletionAsync();
 
