@@ -1,0 +1,43 @@
+<mat-card class="p-0" [@animate]="{value:'*',params:{y:'50px',delay:'300ms'}}">
+  <mat-card-content class="p-0">
+    <ngx-datatable class="material ml-0 mr-0"
+                   [rows]="items"
+                   [columnMode]="'force'"
+                   [headerHeight]="50"
+                   [footerHeight]="50"
+                   [scrollbarH]="true"
+                   [limit]="10"
+                   [rowHeight]="50">
+      <ngx-datatable-column name="Email" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.email }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Full Name" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.fullName }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Role" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row?.role }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Status" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <mat-chip mat-sm-chip [color]="'primary'" [selected]="row.isActive">{{row.isActive ? 'Active' : 'Blocked'}}</mat-chip>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Manage system access" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <button mat-icon-button mat-sm-button color="primary" (click)="changeUserActivation(row)">{{ row.isActive ? 'Block' : 'Unblock' }}</button>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Manage role" [flexGrow]="1">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <button mat-icon-button mat-sm-button color="primary" (click)="changeRole(row)">{{ row.role === 'Admin' ? 'Make User' : 'Make Admin' }}</button>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </mat-card-content>
+</mat-card>

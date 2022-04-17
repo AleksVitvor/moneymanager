@@ -35,6 +35,9 @@
 
         public virtual Role Role { get; set; }
 
+        [Required]
+        public bool IsActive { get; set; }
+
         public virtual List<Transaction> Transactions { get; set; } = new List<Transaction>();
 
         public virtual List<TransactionCategory> TransactionCategories { get; set; } = new List<TransactionCategory>(); 
