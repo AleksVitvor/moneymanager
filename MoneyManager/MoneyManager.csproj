@@ -44,11 +44,18 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\shared\models\registration.model.ts" />
+    <None Remove="ClientApp\src\app\shared\models\usercontrol.model.ts" />
     <None Remove="ClientApp\src\app\shared\services\registration.service.ts" />
     <None Remove="ClientApp\src\app\views\cruds\crud-ngx-table\ngx-table-popup\transaction-category-popup\transaction-category-popup.component.ts" />
     <None Remove="ClientApp\src\app\views\cruds\report.service.ts" />
     <None Remove="ClientApp\src\app\views\cruds\reports\category-component\category.component.ts" />
     <None Remove="ClientApp\src\app\views\cruds\reports\expences-refills-component\expences-refill.component.ts" />
+    <None Remove="ClientApp\src\app\views\user-controls\user-management.routing.ts" />
+    <None Remove="ClientApp\src\app\views\user-controls\user-management.service.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Remove="ClientApp\src\app\views\user-controls\user-control-component\user-management.component.ts" />
   </ItemGroup>
 
   <ItemGroup>

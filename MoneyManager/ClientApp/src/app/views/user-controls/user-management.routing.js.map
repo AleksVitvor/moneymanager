@@ -1,0 +1,1 @@
+{"version":3,"file":"user-management.routing.js","sourceRoot":"","sources":["user-management.routing.ts"],"names":[],"mappings":";;;AACA,uEAAoE;AACpE,gGAA6F;AAEhF,QAAA,oBAAoB,GAAW;IAC1C;QACE,IAAI,EAAE,EAAE;QACR,SAAS,EAAE,mDAAuB;QAClC,WAAW,EAAE,CAAC,+BAAa,CAAC;QAC5B,IAAI,EAAE,EAAE,KAAK,EAAE,iBAAiB,EAAE,KAAK,EAAE,OAAO,EAAE;KACnD;CACF,CAAC"}

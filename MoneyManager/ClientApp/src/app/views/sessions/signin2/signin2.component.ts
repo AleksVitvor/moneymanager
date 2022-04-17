@@ -53,6 +53,10 @@ export class Signin2Component implements OnInit, AfterViewInit, OnDestroy {
 
     this.submitButton.disabled = true;
 
+    if (signinData.email === '' || signinData.password === '') {
+      return;
+    }
+
     this.jwtAuth.signin(signinData.email, signinData.password)
       .subscribe(response => {
         this.router.navigateByUrl(this.jwtAuth.return);

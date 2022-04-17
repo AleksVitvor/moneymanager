@@ -1,12 +1,9 @@
 ﻿namespace MoneyManager.Controllers
 {
-    using Application.DTOs.TransactionDTOs;
     using Application.Filters;
     using Application.Services.TransactionCategoriesService;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System;
-    using System.Collections.Generic;
     using System.Security.Claims;
     using System.Threading.Tasks;
 

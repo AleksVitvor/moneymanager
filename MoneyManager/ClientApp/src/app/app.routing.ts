@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { AdminLayoutComponent } from './shared/components/layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './shared/components/layouts/auth-layout/auth-layout.component';
 import { AuthGuard } from './shared/guards/auth.guard';
+import { UserRoleGuard } from './shared/guards/user-role.guard';
 
 export const rootRouterConfig: Routes = [
   {
@@ -31,6 +32,12 @@ export const rootRouterConfig: Routes = [
       {
         path: 'report',
         loadChildren: () => import('app/views/reports/reports.module').then(m => m.ReportsModule)
+      },
+      {
+        path: 'users',
+        canActivate: [UserRoleGuard],
+        data: { roles: 'Admin' },
+        loadChildren: () => import('app/views/user-controls/user-management.module').then(m => m.UserManagementModule)
       }
     ]
   },
