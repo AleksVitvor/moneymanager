@@ -12,6 +12,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
     public class TransactionService : BaseService, ITransactionService
@@ -129,10 +130,18 @@
                         if (itemsField.ValueType == DocumentFieldType.Double)
                         {
                             transaction.Amount = (float)itemsField.AsDouble();
-                            transaction.CurrencyId = (await context.Currencies
-                                .AsQueryable()
-                                .Where(x => itemsField.Content.Contains(x.CurrencySymbol))
-                                .FirstOrDefaultAsync())?.CurrencyId ?? 1; 
+                            var currencySymbol = Regex.Replace(itemsField.Content, "[0-9]+.?[0-9,]*", string.Empty).Trim();
+                            if (string.IsNullOrWhiteSpace(currencySymbol))
+                            {
+                                transaction.CurrencyId = 1;
+                            }
+                            else
+                            {
+                                var currency = await context.Currencies
+                                    .Where(x => currencySymbol == x.CurrencySymbol)
+                                    .FirstOrDefaultAsync();
+                                transaction.CurrencyId = currency?.CurrencyId ?? 1;
+                            }
                         }
                     }
 
