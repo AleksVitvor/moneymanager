@@ -6,12 +6,17 @@ import { CurrencyModel } from 'app/shared/models/CurrencyModel';
 import { TransactionCategoryModel } from 'app/shared/models/transactioncategory.model';
 import { CrudService } from 'app/views/cruds/crud.service';
 import { ReportService } from '../report.service';
+import { TransactionTypeModel } from '../../../shared/models/transactiontype.model';
 
 @Component({
   selector: 'app-charts',
   templateUrl: './category.component.html'
 })
 export class CategoryChartComponent implements OnInit, OnDestroy {
+  transactionTypes: TransactionTypeModel[] = [
+    { value: 1, viewValue: 'Expenses' },
+    { value: 2, viewValue: 'Refill' }
+  ];
   categories = new FormControl();
   public getCategoriesSub: Subscription;
   public getCategoriesValuesSub: Subscription;
@@ -27,7 +32,7 @@ export class CategoryChartComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private http: HttpClient
   ) { }
-  title = 'Category report (EUR)';
+  title = 'Category report (EUR) by Expenses';
 
 chartColors: any[] = [{
     backgroundColor: '#3f51b5',
@@ -95,8 +100,9 @@ chartColors: any[] = [{
 
   submit() {
     if (!this.itemForm.invalid) {
-      let currencyCode = this.currencies.filter(x=>x.value === this.itemForm.value.currencyId)[0].viewValue;
-      this.title = 'Category report (' + currencyCode + ')';
+      let currencyCode = this.currencies.filter(x => x.value === this.itemForm.value.currencyId)[0].viewValue;
+      let type = this.transactionTypes.filter(x => x.value === this.itemForm.value.transactionTypeId)[0].viewValue;
+      this.title = 'Category report (' + currencyCode + ') by ' + type;
 
       this.crudService.getSelectedCategories(this.selectedCategories)
       .subscribe(data => {
@@ -108,7 +114,8 @@ chartColors: any[] = [{
           CurrencyId: this.itemForm.value.currencyId,
           StartDate: this.itemForm.value.startDate,
           EndDate: this.itemForm.value.endDate,
-          CategoriesList: this.selectedCategories
+          CategoriesList: this.selectedCategories,
+          TransactionTypeId: this.itemForm.value.transactionTypeId
         })
         .subscribe(data => {
           this.radarChartData = data;
@@ -122,7 +129,8 @@ chartColors: any[] = [{
       startDate: ['', Validators.required],
       transactionCategoryId: [''],
       endDate: ['', Validators.required],
-      currencyId: ['', Validators.required]
+      currencyId: ['', Validators.required],
+      transactionTypeId: ['', Validators.required]
     });
   }
 

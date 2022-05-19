@@ -24,7 +24,7 @@
                 var result = new List<AmountByMonthByCategoriesDTO>();
                 var userTransactions = await context.Transactions
                     .Include(x => x.Currency)
-                    .Where(x => x.UserId == userId && x.TransactionDate >= startDate && x.TransactionDate <= endDate)
+                    .Where(x => x.UserId == userId && x.TransactionDate >= startDate && x.TransactionDate <= endDate && x.TransactionTypeId == 1)
                     .Include(x => x.TransactionCategory)
                     .ToListAsync();
                 var userTransactionsByMonth = userTransactions.GroupBy(x => new { x.TransactionDate.Year, x.TransactionDate.Month });
@@ -69,9 +69,11 @@
                 var userTransactions = await context.Transactions
                     .Include(x => x.Currency)
                     .Include(x => x.TransactionCategory)
-                    .Where(x => x.UserId == userId && x.TransactionDate >= filter.StartDate && x.TransactionDate <= filter.EndDate && filter.CategoriesList.Contains(x.TransactionCategoryId))
+                    .Where(x => x.UserId == userId && x.TransactionDate >= filter.StartDate && x.TransactionDate <= filter.EndDate && filter.CategoriesList.Contains(x.TransactionCategoryId) && x.TransactionTypeId == filter.TransactionTypeId)
                     .ToListAsync();
+
                 var userTransactionsByMonth = userTransactions.GroupBy(x => new { x.TransactionDate.Year, x.TransactionDate.Month });
+
                 var userCategories = await context.TransactionCategories
                      .Where(x => x.UserId == userId && x.Description != "Universal" && filter.CategoriesList.Contains(x.TransactionCategoryId))
                      .OrderBy(x => x.Description)
@@ -227,6 +229,69 @@
                 }
 
                 return result;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<TotalReportDTO>> GetTotalReport(int userId, TotalReportFilter filter)
+        {
+            try
+            {
+                var currency = await context.Currencies.FirstOrDefaultAsync(x=>x.CurrencyId == filter.CurrencyId);
+                var result = new List<TotalReportDTO>();
+                var startDate = new DateTime(filter.StartDate.Year, filter.StartDate.Month, 1);
+                var endDate = new DateTime(filter.EndDate.Year, filter.EndDate.Month, DateTime.DaysInMonth(filter.EndDate.Year, filter.EndDate.Month));
+
+                var transactions = await context.Transactions
+                    .Include(x => x.Currency)
+                    .Include(x => x.TransactionType)
+                    .Include(x => x.TransactionCategory)
+                    .Where(x => x.UserId == userId && x.TransactionDate >= startDate && x.TransactionDate <= endDate)
+                    .ToListAsync();
+
+                var groupedTransaction = transactions
+                    .GroupBy(x => new { x.TransactionDate.Year, x.TransactionDate.Month })
+                    .ToDictionary(x => x.Key, y => y.ToList());
+
+                foreach(var monthTransactionGroup in groupedTransaction)
+                {
+                    var monthTransaction = new List<TotalReportTransactionDTO>();
+
+                    foreach(var transaction in monthTransactionGroup.Value)
+                    {
+                        var transactionDTO = new TotalReportTransactionDTO
+                        {
+                            Amount = transaction.Amount.ConvertToCurrency(currency.CurrencyCode, transaction.Currency.CurrencyCode, transaction.TransactionDate, context),
+                            Category = transaction.TransactionCategory.Description,
+                            Type = transaction.TransactionType.Description,
+                            Date = transaction.TransactionDate.ToString("d"),
+                            Currency = currency.CurrencyCode
+                        };
+
+                        monthTransaction.Add(transactionDTO);
+                    }
+
+                    var refill = monthTransaction.Where(x => x.Type == "Refill").Sum(x => x.Amount);
+                    var expenses = monthTransaction.Where(x => x.Type == "Expenses").Sum(x => x.Amount);
+
+                    var total = new TotalReportDTO
+                    {
+                        Currency = currency.CurrencyCode,
+                        Refill = refill,
+                        Expenses = expenses,
+                        Month = new DateTime(monthTransactionGroup.Key.Year, monthTransactionGroup.Key.Month, 1).ToString("MMM/yyy"),
+                        MonthTransactions = monthTransaction,
+                        Date = new DateTime(monthTransactionGroup.Key.Year, monthTransactionGroup.Key.Month, 1),
+                        Total = refill - expenses
+                    };
+
+                    result.Add(total);
+                }
+
+                return result.OrderByDescending(x => x.Date).ToList();
             }
             catch (Exception ex)
             {

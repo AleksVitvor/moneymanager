@@ -30,6 +30,7 @@ import { MonthGroupComponentComponent } from './month-group-component/month-grou
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 
@@ -39,6 +40,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     ReactiveFormsModule,
     FlexLayoutModule,
     NgxDatatableModule,
+    MatDatepickerModule,
     MatInputModule,
     MatIconModule,
     MatCardModule,
