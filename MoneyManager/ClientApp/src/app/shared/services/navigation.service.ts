@@ -252,7 +252,8 @@ export class NavigationService {
       sub: [
         { name: 'General', state: '' },
         { name: 'Expenses vs. Refill', state: 'expenses-vs-refill' },
-        { name: 'Category', state: 'category'}
+        { name: 'Category', state: 'category' },
+        { name: 'Total by month', state: 'total' }
       ]
     },
     {

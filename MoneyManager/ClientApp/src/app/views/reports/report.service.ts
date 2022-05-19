@@ -38,4 +38,17 @@ export class ReportService {
   getExpensesVsRefill(): Observable<any> {
     return this.http.get(`/api/expensesrefill`);
   }
+
+  getTotalReport(): Observable<any> {
+    return this.http.get(`/api/totalreport`);
+  }
+
+  getTotalReportParams(currencyId, startDate, endDate): Observable<any> {
+    return this.http.post('/api/totalreport',
+      {
+        currencyId: currencyId,
+        startDate: startDate,
+        endDate: endDate
+      });
+  }
 }

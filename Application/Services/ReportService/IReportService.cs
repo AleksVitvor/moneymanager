@@ -17,5 +17,7 @@
         List<string> GetMonthFromPeriod(DateTime startDate, DateTime endDate);
 
         Task<List<AmountByMonthByCategoriesDTO>> GetCategoryReport(int userId, CategoryReportRequestFilter filter);
+
+        Task<List<TotalReportDTO>> GetTotalReport(int userId, TotalReportFilter filter);
     }
 }

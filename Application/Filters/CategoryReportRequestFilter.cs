@@ -12,5 +12,7 @@
         public DateTime StartDate { get; set; }
 
         public int CurrencyId { get; set; }
+
+        public int TransactionTypeId { get; set; }
     }
 }

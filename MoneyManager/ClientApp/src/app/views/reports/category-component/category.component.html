@@ -44,6 +44,19 @@
       </mat-form-field>
     </div>
 
+    <div fxFlex="100" class="pr-16">
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Type</mat-label>
+        <mat-select matInput
+                    [ngModel]
+                    formControlName="transactionTypeId">
+          <mat-option *ngFor="let type of transactionTypes" [value]="type.value">
+            {{type.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
     <div fxFlex="100" class="mt-16">
       <button mat-raised-button color="primary" [disabled]="itemForm.invalid || selectedCategories.length == 0">{{"SEARCH" | translate }}</button>
     </div>

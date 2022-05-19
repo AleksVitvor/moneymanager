@@ -26,6 +26,11 @@ import { CrudService } from '../cruds/crud.service';
 import { ExpensesRefillChartComponent } from './expences-refills-component/expences-refill.component';
 import { CategoryChartComponent } from './category-component/category.component';
 import { ChartsComponent } from './chart-component/charts.component';
+import { MonthGroupComponentComponent } from './month-group-component/month-group-component.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTableModule } from '@angular/material/table';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 
@@ -35,10 +40,14 @@ import { ChartsComponent } from './chart-component/charts.component';
     ReactiveFormsModule,
     FlexLayoutModule,
     NgxDatatableModule,
+    MatDatepickerModule,
     MatInputModule,
     MatIconModule,
     MatCardModule,
+    MatExpansionModule,
     MatMenuModule,
+    MatSidenavModule,
+    MatTableModule,
     MatButtonModule,
     MatChipsModule,
     MatListModule,
@@ -54,7 +63,7 @@ import { ChartsComponent } from './chart-component/charts.component';
     FormsModule,
     ChartsModule
   ],
-  declarations: [CategoryChartComponent, ChartsComponent, ExpensesRefillChartComponent],
+  declarations: [CategoryChartComponent, ChartsComponent, ExpensesRefillChartComponent, MonthGroupComponentComponent, MonthGroupComponentComponent],
   providers: [ReportService, CrudService],
 })
 export class ReportsModule { }
