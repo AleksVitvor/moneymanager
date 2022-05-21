@@ -80,6 +80,9 @@ namespace MoneyManager
             var URL = Configuration.GetBillRecognizerEndpoint(Environment);
             BlobConnectionStringContainer.Create(apiKey, URL);
 
+            var emailPassword = Configuration.GetEmailPassword(Environment);
+            EmailPasswordContainer.Create(emailPassword);
+
             services.AddAutoMapper(typeof(UserProfile), typeof(TransactionProfile));
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ITransactionService, TransactionService>();

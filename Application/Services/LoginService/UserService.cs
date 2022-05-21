@@ -19,14 +19,26 @@
 
         }
 
-        public async Task<List<ManageUserDTO>> ChangeUserActive(int id)
+        public async Task<List<ManageUserDTO>> ChangeUserActive(int id, int userModifierId)
         {
             try
             {
+                var admin = await context.Users.FirstOrDefaultAsync(x=>x.UserId == userModifierId);
                 var user = await context.Users.FirstOrDefaultAsync(x => x.UserId == id);
                 user.IsActive = !user.IsActive;
                 context.Users.Update(user);
                 await context.SaveChangesAsync();
+
+                if (!user.IsActive)
+                {
+                    var email = $"Dear {user.Username}.</br>You was blocked in Money Manager System. Please, contact to {admin.Email} to resolve this problem.</br>Best regards,</br>Money Manager System team.";
+                    await EmailService.SendEmailAsync(user.Email, "Blocking", email);
+                }
+                else if (user.IsActive)
+                {
+                    var email = $"Dear {user.Username}.</br>You was unblocked in Money Manager System. Enjoy using our service.</br>Best regards,</br>Money Manager System team.";
+                    await EmailService.SendEmailAsync(user.Email, "Unblocking", email);
+                }
 
                 return await GetUserList();
             }
@@ -119,7 +131,11 @@
                 {
                     throw new UserValidationException("User with the same email already exists");
                 }
-                await context.Users.AddAsync(user);
+                await context.Users.AddAsync(user);              
+
+                var email = $"Dear {user.Username}.</br>You have registered in Money Manager System. Enjoy using our service.</br>Best regards,</br>Money Manager System team.";
+                await EmailService.SendEmailAsync(user.Email, "Registration", email);
+
                 await context.SaveChangesAsync();
             }
             catch (Exception ex)
