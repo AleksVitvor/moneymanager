@@ -4,7 +4,6 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System;
-    using System.Security.Claims;
     using System.Threading.Tasks;
 
     [Authorize]
@@ -36,10 +35,8 @@
         public async Task<IActionResult> ChangeUserActive([FromQuery]int id)
         {
             try
-            {
-                _ = int.TryParse(User.FindFirst(x => x.Type == ClaimsIdentity.DefaultNameClaimType).Value, out int adminId);
-
-                return Ok(await userService.ChangeUserActive(id, adminId));
+            {                
+                return Ok(await userService.ChangeUserActive(id));
             }
             catch (Exception)
             {

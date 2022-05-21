@@ -36,16 +36,6 @@
 
             return configuration["MoneyManager:ConnectionStrings:BillRecognizerApiKey"];
         }
-
-        public static string GetEmailPassword(this IConfiguration configuration, IWebHostEnvironment env)
-        {
-            if (env.IsProduction())
-            {
-                return Environment.GetEnvironmentVariable("EMAIL_PASSWORD", EnvironmentVariableTarget.Process);
-            }
-
-            return configuration["MoneyManager:Passwords:YandexMailPassword"];
-        }
     }
 
 }

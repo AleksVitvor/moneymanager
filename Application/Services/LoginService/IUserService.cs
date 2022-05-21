@@ -14,7 +14,7 @@ namespace Application.Services.LoginService
 
         Task RegisterUser(RegistrationModelDTO registrationModel);
 
-        Task<List<ManageUserDTO>> ChangeUserActive(int id, int userModifierId);
+        Task<List<ManageUserDTO>> ChangeUserActive(int id);
 
         Task<List<ManageUserDTO>> ChangeUserRole(int id);
 
