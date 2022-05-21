@@ -23,6 +23,8 @@
 
         public DbSet<ExchangeRates> ExchangeRates { get; set; }
 
+        public DbSet<TransactionPeriod> TransactionPeriods { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

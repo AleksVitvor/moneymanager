@@ -44,7 +44,8 @@
         {
             try
             {
-                await context.Transactions.AddAsync(mapper.Map<IncommingTransactionDTO, Transaction>(transactionDTO));
+                var transaction = mapper.Map<IncommingTransactionDTO, Transaction>(transactionDTO);
+                await context.Transactions.AddAsync(transaction);
                 await context.SaveChangesAsync();
                 return await GetTransactions(transactionDTO.UserId);
             }
