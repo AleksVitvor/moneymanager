@@ -15,6 +15,12 @@ namespace Domain
         [Column("IsRepeatable")]
         public bool IsRepeatable { get; set; }
 
+        [Column("TransactionPeriodId")]
+        [ForeignKey("TransactionPeriod")]
+        public int? TransactionPeriodId { get; set; }
+
+        public virtual TransactionPeriod TransactionPeriod { get; set; }
+
         [Required]
         [Column("Amount")]
         public float Amount { get; set; }

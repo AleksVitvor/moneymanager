@@ -19,5 +19,7 @@
         public int UserId { get; set; }
 
         public int CurrencyId { get; set; }
+
+        public int? TransactionPeriodId { get; set; }
     }
 }

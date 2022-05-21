@@ -9,17 +9,28 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { CrudService } from '../../crud.service';
 import { TransactionCategoryComponent } from "./transaction-category-popup/transaction-category-popup.component";
 import { CurrencyModel } from "../../../../shared/models/CurrencyModel";
+import { repeatableRequired } from 'app/validators/requiredValidator.validator';
 
 @Component({
   selector: 'app-ngx-table-popup',
   templateUrl: './ngx-table-popup.component.html'
 })
 export class NgxTablePopupComponent implements OnInit, OnDestroy {
+
   transactionTypes: TransactionTypeModel[] = [
     {value: 1, viewValue: 'Expenses'},
     {value: 2, viewValue: 'Refill'}
   ];
+
+  transactionPeriods: TransactionTypeModel[] = [
+    { value: 1, viewValue: 'Once a week' },
+    { value: 2, viewValue: 'Once a month' },
+    { value: 3, viewValue: 'Once every three month' },
+    { value: 4, viewValue: 'Once a year' }
+  ];
+
   transactionCategories: TransactionCategoryModel[];
+
   currencies: CurrencyModel[];
   public getCategoriesSub: Subscription;
   public updateCategoriesSub: Subscription;
@@ -95,8 +106,9 @@ export class NgxTablePopupComponent implements OnInit, OnDestroy {
       transactionCategoryId: [ '', Validators.required ],
       transactionDate: [item.transactionDate || '', Validators.required],
       isRepeatable: [item.isRepeatable || false],
-      currencyId: ['', Validators.required]
-    });
+      currencyId: ['', Validators.required],
+      transactionPeriodId: []
+    }, { validator: repeatableRequired });
   }
 
   submit() {

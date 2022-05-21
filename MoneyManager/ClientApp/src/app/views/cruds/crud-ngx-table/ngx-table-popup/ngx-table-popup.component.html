@@ -73,6 +73,19 @@
         <mat-slide-toggle [formControl]="itemForm.controls['isRepeatable']">Repeatable</mat-slide-toggle>
       </div>
 
+      <div *ngIf="itemForm.controls['isRepeatable'].value === true" fxFlex="100" class="pr-16">
+        <mat-form-field class="full-width" appearance="fill">
+          <mat-label>Currency</mat-label>
+          <mat-select matInput
+                      [ngModel]
+                      formControlName="transactionPeriodId">
+            <mat-option *ngFor="let period of transactionPeriods" [value]="period.value">
+              {{period.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
       <div fxFlex="100" class="mt-16">
         <button mat-raised-button color="primary" [disabled]="itemForm.invalid">{{"SAVE" | translate }}</button>
         <span fxFlex></span>

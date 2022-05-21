@@ -14,6 +14,8 @@
 
             IList<Currency> currencies = new List<Currency>();
 
+            IList<TransactionPeriod> transactionPeriods = new List<TransactionPeriod>();
+
             if (!context.Roles.Any())
             {
                 sampleRole.Add(new Role()
@@ -62,6 +64,33 @@
                 });
 
                 context.Currencies.AddRange(currencies);
+
+                context.SaveChanges();
+            }
+
+            if (!context.TransactionPeriods.Any())
+            {
+                transactionPeriods.Add(new TransactionPeriod
+                {
+                    Description = "Once a week"
+                });
+
+                transactionPeriods.Add(new TransactionPeriod
+                {
+                    Description = "Once a month"
+                });
+
+                transactionPeriods.Add(new TransactionPeriod
+                {
+                    Description = "Once every three month"
+                });
+
+                transactionPeriods.Add(new TransactionPeriod
+                {
+                    Description = "Once a year"
+                });
+
+                context.TransactionPeriods.AddRange(transactionPeriods);
 
                 context.SaveChanges();
             }
