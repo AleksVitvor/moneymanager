@@ -14,6 +14,7 @@ namespace Application.Services.TransactionService
         Task<List<TransactionDTO>> UpdateTransaction(IncommingTransactionDTO transactionDTO);
 
         Task<List<TransactionDTO>> DeleteTransaction(int id, int userId);
+
         Task AddPhotoTransaction(IFormFile formFile, int userId);
     }
 }

@@ -29,6 +29,7 @@
                 var transactions = await context.Transactions
                     .Include(x => x.TransactionCategory)
                     .Include(x => x.TransactionType)
+                    .Include(x => x.Currency)
                     .Where(x => x.UserId == userId)
                     .OrderByDescending(x => x.TransactionDate)
                     .ToListAsync();

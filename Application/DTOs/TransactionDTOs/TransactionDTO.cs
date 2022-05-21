@@ -19,5 +19,7 @@
         public DateTime TransactionDate { get; set; }
 
         public int CurrencyId { get; set; }
+
+        public string Currency { get; set; }
     }
 }
