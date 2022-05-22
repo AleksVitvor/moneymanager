@@ -262,9 +262,12 @@
 
                     foreach(var transaction in monthTransactionGroup.Value)
                     {
+                        var amount = (decimal)transaction.Amount.ConvertToCurrency(currency.CurrencyCode, transaction.Currency.CurrencyCode, transaction.TransactionDate, context);
+                        var roundedAmount = decimal.Round(amount, 2);
+
                         var transactionDTO = new TotalReportTransactionDTO
                         {
-                            Amount = transaction.Amount.ConvertToCurrency(currency.CurrencyCode, transaction.Currency.CurrencyCode, transaction.TransactionDate, context),
+                            Amount = (double)roundedAmount,
                             Category = transaction.TransactionCategory.Description,
                             Type = transaction.TransactionType.Description,
                             Date = transaction.TransactionDate.ToString("d"),
@@ -274,18 +277,21 @@
                         monthTransaction.Add(transactionDTO);
                     }
 
-                    var refill = monthTransaction.Where(x => x.Type == "Refill").Sum(x => x.Amount);
-                    var expenses = monthTransaction.Where(x => x.Type == "Expenses").Sum(x => x.Amount);
+                    var refill = (decimal)monthTransaction.Where(x => x.Type == "Refill").Sum(x => x.Amount);
+                    var expenses = (decimal)monthTransaction.Where(x => x.Type == "Expenses").Sum(x => x.Amount);
+
+                    var roundedRefill = decimal.Round(refill, 2);
+                    var roundedExpenses = decimal.Round(expenses, 2);
 
                     var total = new TotalReportDTO
                     {
                         Currency = currency.CurrencyCode,
-                        Refill = refill,
-                        Expenses = expenses,
+                        Refill = (double)roundedRefill,
+                        Expenses = (double)roundedExpenses,
                         Month = new DateTime(monthTransactionGroup.Key.Year, monthTransactionGroup.Key.Month, 1).ToString("MMM/yyy"),
                         MonthTransactions = monthTransaction,
                         Date = new DateTime(monthTransactionGroup.Key.Year, monthTransactionGroup.Key.Month, 1),
-                        Total = refill - expenses
+                        Total = (double)(roundedRefill - roundedExpenses)
                     };
 
                     result.Add(total);
