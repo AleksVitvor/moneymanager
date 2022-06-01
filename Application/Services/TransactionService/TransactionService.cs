@@ -30,6 +30,7 @@
                     .Include(x => x.TransactionCategory)
                     .Include(x => x.TransactionType)
                     .Include(x => x.Currency)
+                    .Include(x => x.TransactionPeriod)
                     .Where(x => x.UserId == userId)
                     .OrderByDescending(x => x.TransactionDate)
                     .ToListAsync();

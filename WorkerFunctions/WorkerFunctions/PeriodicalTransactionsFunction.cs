@@ -51,7 +51,8 @@ namespace WorkerFunctions
                                 TransactionDate = transaction.TransactionDate.AddDays(7),
                                 TransactionCategoryId = transaction.TransactionCategoryId,
                                 TransactionTypeId = transaction.TransactionTypeId,
-                                UserId = transaction.UserId
+                                UserId = transaction.UserId,
+                                TransactionPeriodId = transaction.TransactionPeriodId
                             };
 
                             transaction.ChildTransaction = newTransaction;
@@ -78,7 +79,8 @@ namespace WorkerFunctions
                                 TransactionDate = transaction.TransactionDate.AddMonths(1),
                                 TransactionCategoryId = transaction.TransactionCategoryId,
                                 TransactionTypeId = transaction.TransactionTypeId,
-                                UserId = transaction.UserId
+                                UserId = transaction.UserId,
+                                TransactionPeriodId = transaction.TransactionPeriodId
                             };
 
                             transaction.ChildTransaction = newTransaction;
@@ -105,7 +107,8 @@ namespace WorkerFunctions
                                 TransactionDate = transaction.TransactionDate.AddMonths(3),
                                 TransactionCategoryId = transaction.TransactionCategoryId,
                                 TransactionTypeId = transaction.TransactionTypeId,
-                                UserId = transaction.UserId
+                                UserId = transaction.UserId,
+                                TransactionPeriodId = transaction.TransactionPeriodId
                             };
 
                             transaction.ChildTransaction = newTransaction;
@@ -132,7 +135,8 @@ namespace WorkerFunctions
                                 TransactionDate = transaction.TransactionDate.AddYears(1),
                                 TransactionCategoryId = transaction.TransactionCategoryId,
                                 TransactionTypeId = transaction.TransactionTypeId,
-                                UserId = transaction.UserId
+                                UserId = transaction.UserId,
+                                TransactionPeriodId = transaction.TransactionPeriodId
                             };
 
                             transaction.ChildTransaction = newTransaction;

@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { HttpEventType, HttpClient } from '@angular/common/http';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AppLoaderService } from '../../../../shared/services/app-loader/app-loader.service';
 
 @Component({
   selector: 'app-upload',
@@ -14,7 +15,8 @@ export class UploadComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<UploadComponent>,
-    private http: HttpClient) { }
+    private http: HttpClient,
+    private loader: AppLoaderService) { }
   ngOnInit() {
   }
   public uploadFile = (files) => {
@@ -23,11 +25,12 @@ export class UploadComponent implements OnInit {
     }
     let fileToUpload = <File>files[0];
     if (fileToUpload.type !== "application/pdf" && fileToUpload.type !== "image/jpeg") {
-      this.message = 'File should be in pdf/png/jpeg format';
+      this.message = 'File should be in pdf/jpeg format';
       return;
     }
     const formData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
+    this.loader.open();
     this.http.post('/api/file', formData, { reportProgress: true, observe: 'events' })
       .subscribe(event => {
         if (event.type === HttpEventType.UploadProgress)
@@ -35,6 +38,7 @@ export class UploadComponent implements OnInit {
         else if (event.type === HttpEventType.Response) {
           this.message = 'Upload success.';
           this.onUploadFinished.emit(event.body);
+          this.loader.close();
         }
       });
   }

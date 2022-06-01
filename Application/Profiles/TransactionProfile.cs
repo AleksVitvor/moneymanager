@@ -19,7 +19,8 @@
                 .ForMember(res => res.IsRepeatable, src => src.MapFrom(x => x.IsRepeatable))
                 .ForMember(res => res.Id, src => src.MapFrom(x => x.TransactionId))
                 .ForMember(res => res.CurrencyId, src => src.MapFrom(x => x.CurrencyId))
-                .ForMember(res => res.Currency, src => src.MapFrom(x => x.Currency.CurrencyCode));
+                .ForMember(res => res.Currency, src => src.MapFrom(x => x.Currency.CurrencyCode))
+                .ForMember(res => res.TransactionPeriod, src => src.MapFrom(x => x.TransactionPeriod.Description));
 
             CreateMap<IncommingTransactionDTO, Transaction>()
                 .ForMember(res => res.UserId, src => src.MapFrom(x => x.UserId))

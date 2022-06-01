@@ -21,5 +21,7 @@
         public int CurrencyId { get; set; }
 
         public string Currency { get; set; }
+
+        public string TransactionPeriod { get; set; }
     }
 }
