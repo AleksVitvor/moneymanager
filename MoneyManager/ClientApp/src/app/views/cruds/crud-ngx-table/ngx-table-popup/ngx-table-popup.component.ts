@@ -107,7 +107,7 @@ export class NgxTablePopupComponent implements OnInit, OnDestroy {
       transactionDate: [item.transactionDate || '', Validators.required],
       isRepeatable: [item.isRepeatable || false],
       currencyId: ['', Validators.required],
-      transactionPeriodId: [item.transactionPeriod !== undefined ? this.transactionPeriods.find(x => x.viewValue === item.transactionPeriod).value : '']
+      transactionPeriodId: [item.transactionPeriod !== undefined && item.transactionPeriod !== null ? this.transactionPeriods.find(x => x.viewValue === item.transactionPeriod).value : '']
     }, { validator: repeatableRequired });
   }
 
