@@ -14,6 +14,9 @@ export class CrudService {
     return this.http.get(`/api/transaction`);
   }
   addItem(item): Observable<any> {
+    if (item.transactionPeriodId === '') {
+      item.transactionPeriodId = null;
+    }
     return this.http.post('/api/transaction', item);
   }
   updateItem(id, item): Observable<any> {
