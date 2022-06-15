@@ -114,7 +114,7 @@
             try
             {
                 var user = mapper.Map<User>(registrationModel);
-                user.TransactionCategories = DefaultTransactionCategories.TransactionCategories;
+                user.TransactionCategories = new DefaultTransactionCategories().TransactionCategories;
                 if (context.Users.Any(x => x.Email == user.Email))
                 {
                     throw new UserValidationException("User with the same email already exists");

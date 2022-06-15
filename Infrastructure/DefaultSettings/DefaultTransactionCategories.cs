@@ -3,9 +3,9 @@
     using Domain;
     using System.Collections.Generic;
 
-    public static class DefaultTransactionCategories
+    public class DefaultTransactionCategories
     {
-        public static List<TransactionCategory> TransactionCategories { get; } = new List<TransactionCategory>()
+        public List<TransactionCategory> TransactionCategories { get; } = new List<TransactionCategory>()
         {
             new TransactionCategory()
             {
