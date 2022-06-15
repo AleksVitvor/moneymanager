@@ -18,6 +18,10 @@ export class CrudService {
   }
   updateItem(id, item): Observable<any> {
     item.id = id;
+    if (item.transactionPeriodId === '') {
+      item.transactionPeriodId = null;
+    }
+
     return this.http.put('/api/transaction', item);
   }
   removeItem(row): Observable<any> {
