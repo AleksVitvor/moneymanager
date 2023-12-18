@@ -3,10 +3,10 @@
 
 name: Build and deploy dotnet core app to Azure Function App - PeriodicalTransactionsFunction
 
-on: |
+on:
   push:
     branches:
-      - main
+    - 'main'
   workflow_dispatch:
 
 env:
