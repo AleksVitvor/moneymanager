@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32106.194
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkerFunctions", "WorkerFunctions\WorkerFunctions.csproj", "{A6543E4B-8D7D-4B78-BDFD-019C56A141C6}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{EB743A94-434A-4D82-9798-29D3D7E6702E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExchangeRateLibrary", "ExchangeRateLibrary\ExchangeRateLibrary.csproj", "{3A62127D-258D-450C-92CB-7B64A0893033}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeRateLibrary.Tests", "ExchangeRateLibrary.Tests\ExchangeRateLibrary.Tests.csproj", "{9249D8C0-F61B-4B39-BDB3-D21D0FA4A9B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{3A62127D-258D-450C-92CB-7B64A0893033}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A62127D-258D-450C-92CB-7B64A0893033}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A62127D-258D-450C-92CB-7B64A0893033}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9249D8C0-F61B-4B39-BDB3-D21D0FA4A9B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9249D8C0-F61B-4B39-BDB3-D21D0FA4A9B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9249D8C0-F61B-4B39-BDB3-D21D0FA4A9B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9249D8C0-F61B-4B39-BDB3-D21D0FA4A9B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
