@@ -1,0 +1,34 @@
+name: Build and test .NET application + SPA
+
+on:
+  pull_request:
+    paths:
+    - WebApp/**
+    branches:
+    - 'main'
+
+env:
+  CONFIGURATION: Release
+  DOTNET_CORE_VERSION: 5.0.x
+  WORKING_DIRECTORY: WebApp
+
+jobs: 
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+      
+      - name: Restore
+        run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
+
+      - name: Build
+        run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+
+      - name: Test
+        run: dotnet test "${{ env.WORKING_DIRECTORY }}"

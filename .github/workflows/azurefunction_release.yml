@@ -1,0 +1,54 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/azure/functions-action
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy .NET application to Function App MoneyManagerFunctionApp
+on:
+  push:
+    paths:
+    - WorkerFunctions/**
+    branches:
+    - main
+env:
+  AZURE_FUNCTIONAPP_NAME: MoneyManagerFunctionApp
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: WorkerFunctions\published
+  CONFIGURATION: Release
+  DOTNET_CORE_VERSION: 6.0.x
+  WORKING_DIRECTORY: WorkerFunctions
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+    - name: Restore
+      run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
+    - name: Build
+      run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+    - name: Publish
+      run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}"
+    - name: Publish Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: functionapp
+        path: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+  deploy:
+    runs-on: windows-latest
+    needs: build
+    steps:
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v3
+      with:
+        name: functionapp
+        path: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+        
+    - name: Deploy to Azure Function App
+      uses: Azure/functions-action@v1
+      id: fa
+      with:
+        app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+        slot-name: 'Production'
+        package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8B299D69C65B468495BABA7E2F77E5B4 }}    

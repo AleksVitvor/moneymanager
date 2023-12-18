@@ -1,4 +1,4 @@
-name: ci
+name: Build and push .NET application + SPA to Docker
 
 on:
   push:
