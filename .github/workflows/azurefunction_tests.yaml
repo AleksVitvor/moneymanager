@@ -1,4 +1,4 @@
-name: Build and test .NET application + SPA
+name: Build and test .NET Azure function
 
 on:
   pull_request:
