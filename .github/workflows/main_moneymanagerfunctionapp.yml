@@ -4,6 +4,8 @@
 name: Build and deploy .NET application to Function App MoneyManagerFunctionApp
 on:
   push:
+    paths:
+    - WorkerFunctions/**
     branches:
     - main
 env:
