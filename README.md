@@ -22,3 +22,7 @@ We have 2 test pipelines:
 2. Azure Function:
 - executed if changes in WorkerFunctions folder detected
 - build .NET app and run tests
+
+#### What should be added to pipelines:
+1. Merge request pipeline:
+- add code style checks using ReSharper Command Line Tools
